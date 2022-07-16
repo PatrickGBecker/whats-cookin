@@ -1,14 +1,14 @@
 import { expect } from 'chai';
-// import { userData } from '../src/data/sampleUserData.js';
+import { usersData } from '../src/data/sampleUserData.js';
 import User from '../src/classes/User.js';
 
 describe('User', () => {
-  let userData;
+  let usersData;
   let user1;
   let user2;
 
   beforeEach( () => {
-    userData = [
+    usersData = [
       {
         "name": "Saige O'Kon",
         "id": 1,
@@ -406,8 +406,8 @@ describe('User', () => {
         ]
       }
     ];
-    user1 = new User(userData[0]);
-    user2 = new User(userData[0]);
+    user1 = new User(usersData[0]);
+    user2 = new User(usersData[0]);
   });
 
   it('should be a function', () => {
