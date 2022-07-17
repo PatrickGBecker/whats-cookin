@@ -1,20 +1,26 @@
 import { expect } from 'chai';
-import { usersData } from '../src/data/sampleUserData.js'; 
+import { usersData } from '../src/data/sampleUserData.js';
 import { recipeData } from '../src/data/sampleRecipeData.js';
+import { ingredientsData } from '../src/data/sampleIngredientData.js';
 import User from '../src/classes/User.js';
 import RecipeRepository from '../src/classes/RecipeRepository';
+import Recipe from '../src/classes/Recipe';
 
 
 describe('User', () => {
-  let user1;
-  let user2;
-  let repository;
+  let user;
+  let recipe;
+  let recipeName;
+  let recipeRepository;
+  let allIngredientsRecipe;
 
   beforeEach( () => {
-    user1 = new User(usersData[0]);
-    console.log(usersData[0])
-    user2 = new User(usersData[1]);
-    repository = new RecipeRepository(recipeData);
+    allIngredientsRecipe = new Recipe(recipeData[0]);
+    recipeRepository = new RecipeRepository(recipeData);
+    user = new User(usersData[0], recipeRepository);
+    // recipe.getIngredientsData(ingredientsData);
+    allIngredientsRecipe.getIngredientsData(ingredientsData);
+    user.addToFavorites(allIngredientsRecipe);
   });
 
   it('should be a function', () => {
@@ -22,19 +28,19 @@ describe('User', () => {
   });
 
   it('should be an instance of User', () => {
-    expect(user1).to.be.an.instanceOf(User)
+    expect(user).to.be.an.instanceOf(User)
   });
 
   it('should have a name', () => {
-    expect(user1.name).to.equal(`Saige O'Kon`);
+    expect(user.name).to.equal(`Saige O'Kon`);
   });
 
   it('should have an id', () => {
-    expect(user1.id).to.equal(1);
+    expect(user.id).to.equal(1);
   });
 
   it('should have a pantry of ingredients', () => {
-    expect(user1.pantry).to.deep.equal([
+    expect(user.pantry).to.deep.equal([
       {
         "ingredient": 11297,
         "amount": 4
@@ -177,20 +183,28 @@ describe('User', () => {
       }
     ]);
   });
-  
-    it.skip('should be able to add favorite recipes to a list', () => {
-      // expect(user1.favoriteRecipes).to.equal([]);
+
+    it('should be able to add favorite recipes to a list', () => {
+      user.addToFavorites(recipe);
+
+      expect(user.favoriteRecipes[0]).to.deep.equal(allIngredientsRecipe);
     });
-  
-    it.skip('should be able to remove favorite recipes to a list', () => {
-      // expect(user1.favoriteRecipes).to.equal([]);
+
+    it('should be able to remove favorite recipes to a list', () => {
+      user.removeFromFavorites(allIngredientsRecipe);
+
+      expect(user.favoriteRecipes).to.deep.equal(user.favoriteRecipes);
     });
-  
-  it('should be able to filter recipes by name', () => {
-    // expect(repository.filterByRecipeName(recipeName)).to.equal(['peanut butter cookies']);
+
+  it('should be able to filter favorite recipes by name', () => {
+    const filteredRecipes = user.filterFavoritesByName('Loaded Chocolate Chip Pudding Cookie Cups')
+
+    expect(filteredRecipes[0]).to.deep.equal(user.favoriteRecipes[0]);
   });
-  
-  it.skip('should be able to filter recipes by tag', () => {
-    // expect(repository.filterByTag()).to.equal('');
+
+  it('should be able to filter recipes by tag', () => {
+    const filteredRecipes = user.filterFavoritesByTag('Loaded Chocolate Chip Pudding Cookie Cups')
+
+    expect(filteredRecipes[0]).to.deep.equal(user.favoriteRecipes[0]);
   });
 });
