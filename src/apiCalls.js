@@ -1,18 +1,28 @@
 // Your fetch requests will live here!
-fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users')
-    .then(response => response.json())
-    .then(data => data)
-    .catch(error => console.log(error));
+// const finalDestination = 'https://what-s-cookin-starter-kit.herokuapp.com';
 
-fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients')
-    .then(response => response.json())
-    .then(data => data)
-    .catch(error => console.log(error));
+function loadUsers() {
+  return fetch(`${finalDestination}/api/v1/users`)
+  .then(response => response.json())
+  .then(data => data)
+  .catch(error => console.log(error));
+};
 
-fetch('Get all recipes	https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes')
-    .then(response => response.json())
-    .then(data => data)
-    .catch(error => console.log(error))
+function loadIngredients() {
+  return fetch(`${finalDestination}/api/v1/ingredients`)
+  .then(response => response.json())
+  .then(data => data)
+  .catch(error => console.log(error));
+};
+
+function loadRecipes() {
+  return fetch(`${finalDestination}/api/v1/recipes`)
+  .then(response => response.json())
+  .then(data => data.recipes)
+  .catch(error => console.log(error))
+}
+
+export { loadUsers, loadIngredients, loadRecipes };
 
 
 console.log('I will be a fetch request!')
