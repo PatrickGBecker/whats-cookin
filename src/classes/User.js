@@ -1,10 +1,10 @@
 import RecipeRepository from './RecipeRepository'
 
 class User {
-  constructor(user, recipeRepository) {
-    this.name = user.name;
-    this.id = user.id;
-    this.pantry = user.pantry;
+  constructor(usersData, recipeRepository) {
+    this.name = usersData.name;
+    this.id = usersData.id;
+    this.pantry = usersData.pantry;
     this.favoriteRecipes = [];
     this.filterByRecipeName = [];
     this.repository = recipeRepository;
