@@ -6,12 +6,12 @@ import './images/turing-logo.png'
 import Ingredient from './classes/Ingredient'
 import RecipeRepository from './classes/RecipeRepository'
 import Recipe from './classes/Recipe'
-// import Users from './classes/'
+import Users from './classes/User'
+import User from './classes/User';
 
-let repository;
+let recipeRepository;
+let recipe;
 let user;
-
-console.log('this is a test')
 
 // Query Selectors for buttons:
 let allRecipesTabButton = document.querySelector('.nav-tabs-all-recipes');
@@ -64,7 +64,7 @@ allRecipesTabButton.addEventListener('click', sortRecipesByName);
 // addToFavoritesButton.addEventListeners('click', );
 // cookRecipeButton.addEventListeners('click', );
 
-// window.addEventListener('load', sortRecipesByName);
+window.addEventListener('load', handleFetch);
 // .addEventListeners('click', );
 // .addEventListeners('click', );
 // .addEventListeners('click', );
@@ -106,6 +106,58 @@ function removeStyling(elements, className) {
 //   sortRecipesByName();
 // }
 
+function handleFetch() {
+  loadUsers()
+    .then((data) => {
+      console.log('data', data)
+      user = new User(data)
+      console.log('user', data)
+    })
+    .catch (error => console.log(error));
+  loadRecipes()
+    .then( (data) => {
+      console.log('recipes', data)
+      recipeRepository = new RecipeRepository(data.recipes)
+      console.log("repo", recipeRepository)
+      // getRecipes(recipeRepository);
+    })
+    .catch (error => console.log(error));
+  loadIngredients()
+    .then( (data) => {
+      recipe = new Recipe(data.ingredients)
+      console.log('recipe', recipe)
+  })
+    .catch(error => console.log(error));
+};
+
+function getRandomUser(array) {
+  const index = Math.floor(Math.random() * array.length);
+  const userData = array[index];
+  return userData;
+};
+
+// function getUser() {
+//   loadUsers().then(userData => {
+//     getRecipes(userData)
+//   })
+// };
+
+// function getRecipes(recipeRepository) {
+//     getIngredients(usersData);
+  
+//   // const userData = getRandomUser(loadUsers());
+//   // user = new User(userData, recipeRepository);
+// };
+
+// function getIngredients(usersData) {
+
+//   recipeRepository.getRecipeIngredientsData(ingredientsData)
+//   )};
+//   const userData = getRandomUser(usersData);
+//   // const ingredients = new Ingredient()
+//   user = new User(userData, recipeRepository);
+// };
+
 function sortRecipesByName() {
   repository = loadRecipes();
   console.log('test2: ', repository) 
@@ -118,19 +170,12 @@ function sortRecipesByName() {
       return a - b
   });
 
-  // const recipes = repository
-  //   .map(recipe => recipe)
-  //   .sort( (a, b) => {
-  //     return a - b
-  // });
-
-
   return recipes;
-}
+};
 
-function viewSingleRecipe() {
+// function viewSingleRecipe() {
 
-}
+// }
 
 // function displaySingleRecipeView() {
 //   showElements([]);
