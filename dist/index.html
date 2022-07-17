@@ -25,35 +25,43 @@
     <main class="main">
       <section class="main-view" id="mainViewSection">
         <section class="tag-section-recipes-container hidden" id="tagRecipesContainer"></section>
-        <h1 class="main-title">What's Cookin'?!</h1>
+        <div class="main-page-heading" id="mainPageUtensilsImage" alt="A sketch of cooking utensils">
+          
+          <h1 class="main-title">What's Cookin'?!</h1>
+          <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg"/>
+        </div>
         <article class="tag-label-container" id="tagLabelIcon">
-          <button class="tag-label-button" value="snacks"
-            <p class="tag-label-name">snacks</p>
-          </button>
-          <button class="tag-label-button" value="appetizers"
-            <p class="tag-label-name">appetizers</p>
-          </button>
-          <button class="tag-label-button" value="side dishes"
-            <p class="tag-label-name">side dishes</p>
-          </button>
-          <button class="tag-label-button" value="soups"
-            <p class="tag-label-name">soups</p>
-          </button>
-          <button class="tag-label-button" value="salads"
-            <p class="tag-label-name">salads</p>
-          </button>
-          <button class="tag-label-button" value="breakfast"
-            <p class="tag-label-name">breakfast</p>
-          </button>
-          <button class="tag-label-button" value="lunch"
-            <p class="tag-label-name">lunch</p>
-          </button>
-          <button class="tag-label-button" value="dinner"
-            <p class="tag-label-name">dinner</p>
-          </button>
-          <button class="tag-label-button" value="dessert"
-            <p class="tag-label-name">dessert</p>
-          </button>
+          <div class="first-row-tag-buttons">
+            <button class="tag-label-button" value="snacks"
+              <p class="tag-label-name">snacks</p>
+            </button>
+            <button class="tag-label-button" value="appetizers"
+              <p class="tag-label-name">appetizers</p>
+            </button>
+            <button class="tag-label-button" value="side dishes"
+              <p class="tag-label-name">side dishes</p>
+            </button>
+            <button class="tag-label-button" value="soups"
+              <p class="tag-label-name">soups</p>
+            </button>
+          </div>
+          <div class="second-row-tag-buttons">
+            <button class="tag-label-button" value="salads"
+              <p class="tag-label-name">salads</p>
+            </button>
+            <button class="tag-label-button" value="breakfast"
+              <p class="tag-label-name">breakfast</p>
+            </button>
+            <button class="tag-label-button" value="lunch"
+              <p class="tag-label-name">lunch</p>
+            </button>
+            <button class="tag-label-button" value="dinner"
+              <p class="tag-label-name">dinner</p>
+            </button>
+            <button class="tag-label-button" value="dessert"
+              <p class="tag-label-name">dessert</p>
+            </button>
+           </div>
         </article>
       </section>
       <section class="searched-recipes-recipe-results-container hidden" id="searchedRecipesContainer">
@@ -82,7 +90,7 @@
               <p class="total-cost">Cost:<span class="icons"> money-icon</span><span id="recipeCost"></span></p>
             </div>
             <div class="recipe-details-container">
-              <img src="https://daily.jstor.org/wp-content/uploads/2020/05/a_brief_history_of_comfort_food_1_1050x700.jpg/" class="recipe-image" id="recipeImage" alt="A beautiful photograph of luscious food crafted with legendary skill">
+              <img src="https://health.clevelandclinic.org/wp-content/uploads/sites/3/2016/10/foodJointPainRelief-142336977-770x533-1.jpg" class="recipe-image" id="recipeImage" alt="A beautiful photograph of luscious food crafted with legendary skill">
               <div class="recipe-buttons-container">
                 <button type="button" class="recipe-button-favorite-button" id="addToFavoritesButton">
                   <span class="icons" label="favorites-icon"></span>
