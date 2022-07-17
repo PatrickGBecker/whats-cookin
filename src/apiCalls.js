@@ -1,5 +1,4 @@
 // Your fetch requests will live here!
-// const finalDestination = 'https://what-s-cookin-starter-kit.herokuapp.com';
 
 function loadUsers() {
   return fetch(`${finalDestination}/api/v1/users`)
