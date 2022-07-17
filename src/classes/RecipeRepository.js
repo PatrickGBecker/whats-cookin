@@ -1,4 +1,5 @@
 import Recipe from './Recipe';
+import Ingredient from './Ingredient';
 
 class RecipeRepository {
   constructor(recipeData) {
@@ -20,7 +21,18 @@ class RecipeRepository {
       .map(recipe => recipe);
       return filteredRecipesByName;
   }
+
+  // getRecipeIngredientsData(ingredientsData) {
+  //   console.log('recipes', this.recipes)
+  //   // const newRecipe = new Recipe(recipe)
+  //   const recipeMap = this.recipes.map(recipe => new Recipe(recipe))
+  //     this.recipes.forEach((recipe) => {
+  //       recipe.getIngredientsData(ingredientsData) // return new Ingredient(ingredient);
+  //   })
     
+  //   // this.recipes.forEach(ingredient => ingredient.findIngredientInfo(ingredientsData));
+  // };
+
 };
 
 export default RecipeRepository;
