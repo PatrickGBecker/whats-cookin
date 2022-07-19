@@ -6,7 +6,6 @@ import './images/turing-logo.png'
 import Ingredient from './classes/Ingredient'
 import RecipeRepository from './classes/RecipeRepository'
 import Recipe from './classes/Recipe'
-import Users from './classes/User'
 import User from './classes/User';
 
 let recipeRepository;
@@ -57,7 +56,7 @@ let allRecipes = document.querySelector('.all-recipes-page-recipes-container');
 
 
 // Event Listeners:
-allRecipesTabButton.addEventListener('click', sortRecipesByName);
+// allRecipesTabButton.addEventListener('click', sortRecipesByName);
 // favoritesTabButton.addEventListeners('click', );
 // searchButton.addEventListeners('click', );
 // recipeTagButton.addEventListeners('click', );
@@ -92,7 +91,37 @@ function removeStyling(elements, className) {
   elements.classList.remove(className)
 }
 
+function getRandomUser(array) {
+  const index = Math.floor(Math.random() * array.length);
+  const userData = array[index];
+  return userData;
+};
+
 // DOM Manipulation Functions:
+function handleFetch() {
+  loadRecipes()
+  .then( (data) => {
+    recipeRepository = new RecipeRepository(data)
+    console.log('recipes', data)
+    console.log("repo variable", recipeRepository)
+  })
+  .catch (error => console.log(error));
+  loadUsers()
+  .then((data) => {
+    user = new User(data)
+    console.log('user', data)
+    console.log('user variable', user);
+  })
+  .catch (error => console.log(error));
+  loadIngredients()
+  .then( (data) => {
+    recipe = new Recipe(data)
+    console.log('ingredients', data)
+    console.log('recipe vairable', recipe);
+  })
+  .catch(error => console.log(error));
+};
+
 // function displayMainPage() {
 //   showElements([]);
 //   hideElements([]);
@@ -106,35 +135,7 @@ function removeStyling(elements, className) {
 //   sortRecipesByName();
 // }
 
-function handleFetch() {
-  loadUsers()
-    .then((data) => {
-      console.log('data', data)
-      user = new User(data)
-      console.log('user', data)
-    })
-    .catch (error => console.log(error));
-  loadRecipes()
-    .then( (data) => {
-      console.log('recipes', data)
-      recipeRepository = new RecipeRepository(data.recipes)
-      console.log("repo", recipeRepository)
-      // getRecipes(recipeRepository);
-    })
-    .catch (error => console.log(error));
-  loadIngredients()
-    .then( (data) => {
-      recipe = new Recipe(data.ingredients)
-      console.log('recipe', recipe)
-  })
-    .catch(error => console.log(error));
-};
 
-function getRandomUser(array) {
-  const index = Math.floor(Math.random() * array.length);
-  const userData = array[index];
-  return userData;
-};
 
 // function getUser() {
 //   loadUsers().then(userData => {
@@ -158,20 +159,20 @@ function getRandomUser(array) {
 //   user = new User(userData, recipeRepository);
 // };
 
-function sortRecipesByName() {
-  repository = loadRecipes();
-  console.log('test2: ', repository) 
-  console.log('load:', loadRecipes())
-  const recipeArray = repository.recipeData
-  console.log('repository recipeData: ', repository.recipeData)
-  const recipes = recipeArray
-    .map(recipe => recipe.name)
-    .sort( (a, b) => {
-      return a - b
-  });
+// function sortRecipesByName() {
+//   repository = loadRecipes();
+//   console.log('test2: ', repository) 
+//   console.log('load:', loadRecipes())
+//   const recipeArray = repository.recipeData
+//   console.log('repository recipeData: ', repository.recipeData)
+//   const recipes = recipeArray
+//     .map(recipe => recipe.name)
+//     .sort( (a, b) => {
+//       return a - b
+//   });
 
-  return recipes;
-};
+//   return recipes;
+// };
 
 // function viewSingleRecipe() {
 
