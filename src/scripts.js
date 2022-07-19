@@ -1,12 +1,11 @@
 import '../dist/bundle.js';
 import './styles.css';
-import { loadUsers, loadIngredients, loadRecipes } from './apiCalls';
+import getData from './apiCalls';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import Ingredient from './classes/Ingredient'
 import RecipeRepository from './classes/RecipeRepository'
 import Recipe from './classes/Recipe'
-import Users from './classes/User'
 import User from './classes/User';
 
 let recipeRepository;
@@ -57,14 +56,20 @@ let allRecipes = document.querySelector('.all-recipes-page-recipes-container');
 
 
 // Event Listeners:
-allRecipesTabButton.addEventListener('click', sortRecipesByName);
+// allRecipesTabButton.addEventListener('click', sortRecipesByName);
 // favoritesTabButton.addEventListeners('click', );
 // searchButton.addEventListeners('click', );
 // recipeTagButton.addEventListeners('click', );
 // addToFavoritesButton.addEventListeners('click', );
 // cookRecipeButton.addEventListeners('click', );
 
-window.addEventListener('load', handleFetch);
+window.addEventListener('load', () => {
+  getData.then(responses => {
+    console.log(responses[0]);
+    console.log(responses[1]);
+    console.log(responses[2]);
+  })
+});
 // .addEventListeners('click', );
 // .addEventListeners('click', );
 // .addEventListeners('click', );
@@ -92,7 +97,15 @@ function removeStyling(elements, className) {
   elements.classList.remove(className)
 }
 
+function getRandomUser(array) {
+  const index = Math.floor(Math.random() * array.length);
+  const userData = array[index];
+  return userData;
+};
+
 // DOM Manipulation Functions:
+
+
 // function displayMainPage() {
 //   showElements([]);
 //   hideElements([]);
@@ -105,73 +118,6 @@ function removeStyling(elements, className) {
 //   // hideElements([]);
 //   sortRecipesByName();
 // }
-
-function handleFetch() {
-  loadUsers()
-    .then((data) => {
-      console.log('data', data)
-      user = new User(data)
-      console.log('user', data)
-    })
-    .catch (error => console.log(error));
-  loadRecipes()
-    .then( (data) => {
-      console.log('recipes', data)
-      recipeRepository = new RecipeRepository(data.recipes)
-      console.log("repo", recipeRepository)
-      // getRecipes(recipeRepository);
-    })
-    .catch (error => console.log(error));
-  loadIngredients()
-    .then( (data) => {
-      recipe = new Recipe(data.ingredients)
-      console.log('recipe', recipe)
-  })
-    .catch(error => console.log(error));
-};
-
-function getRandomUser(array) {
-  const index = Math.floor(Math.random() * array.length);
-  const userData = array[index];
-  return userData;
-};
-
-// function getUser() {
-//   loadUsers().then(userData => {
-//     getRecipes(userData)
-//   })
-// };
-
-// function getRecipes(recipeRepository) {
-//     getIngredients(usersData);
-  
-//   // const userData = getRandomUser(loadUsers());
-//   // user = new User(userData, recipeRepository);
-// };
-
-// function getIngredients(usersData) {
-
-//   recipeRepository.getRecipeIngredientsData(ingredientsData)
-//   )};
-//   const userData = getRandomUser(usersData);
-//   // const ingredients = new Ingredient()
-//   user = new User(userData, recipeRepository);
-// };
-
-function sortRecipesByName() {
-  repository = loadRecipes();
-  console.log('test2: ', repository) 
-  console.log('load:', loadRecipes())
-  const recipeArray = repository.recipeData
-  console.log('repository recipeData: ', repository.recipeData)
-  const recipes = recipeArray
-    .map(recipe => recipe.name)
-    .sort( (a, b) => {
-      return a - b
-  });
-
-  return recipes;
-};
 
 // function viewSingleRecipe() {
 
