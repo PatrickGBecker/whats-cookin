@@ -24,7 +24,7 @@ What's Cookin' is a virtual recipe database, where users can browse and save rec
 
 1. Clone down this repository.
   ```
-  git clone git@github.com:nzambonivergara/whats-cookin.git
+  git clone git@github.com:PatrickGBecker/whats-cookin.git
   ```
 2. In your terminal, run:
   ```
