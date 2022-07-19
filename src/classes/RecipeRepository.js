@@ -5,7 +5,7 @@ class RecipeRepository {
   constructor(recipeData) {
     this.recipes = recipeData;
   }
-  
+
   filterByTag(tagType) {
     const recipes = this.recipes;
     const filteredRecipesByTags = recipes
@@ -22,16 +22,19 @@ class RecipeRepository {
       return filteredRecipesByName;
   }
 
-  // getRecipeIngredientsData(ingredientsData) {
-  //   console.log('recipes', this.recipes)
-  //   // const newRecipe = new Recipe(recipe)
-  //   const recipeMap = this.recipes.map(recipe => new Recipe(recipe))
-  //     this.recipes.forEach((recipe) => {
-  //       recipe.getIngredientsData(ingredientsData) // return new Ingredient(ingredient);
-  //   })
-    
-  //   // this.recipes.forEach(ingredient => ingredient.findIngredientInfo(ingredientsData));
-  // };
+   getRecipeIngredientsData(ingredientName, recipesToSearch) {
+    const recipes = recipesToSearch || this.recipes;
+    const filteredRecipe = recipes.filter((recipe) => {
+      const hasMatchingIngredient = recipe.ingredients.find((ingredient) => {
+        return ingredient.name.includes(ingredientName);
+      })
+      if (hasMatchingIngredient) {
+        return true;
+      }
+      return false;
+    })
+    return filteredRecipe;
+  }
 
 };
 
