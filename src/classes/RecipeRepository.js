@@ -6,6 +6,13 @@ class RecipeRepository {
     this.recipes = recipeData;
   }
 
+  getRecipesInfo(ingredientsData) {
+      this.recipes = this.recipes.map(recipes => new Recipe(recipes));
+      this.recipes.forEach((recipe) => {
+        recipe.getIngredientsData(ingredientsData);
+      });
+    }
+
   filterByTag(tagType) {
     const recipes = this.recipes;
     const filteredRecipesByTags = recipes
