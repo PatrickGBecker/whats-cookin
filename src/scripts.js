@@ -1,6 +1,6 @@
 import '../dist/bundle.js';
 import './styles.css';
-import { loadUsers, loadIngredients, loadRecipes } from './apiCalls';
+import getData from './apiCalls';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import Ingredient from './classes/Ingredient'
@@ -63,7 +63,13 @@ let allRecipes = document.querySelector('.all-recipes-page-recipes-container');
 // addToFavoritesButton.addEventListeners('click', );
 // cookRecipeButton.addEventListeners('click', );
 
-window.addEventListener('load', handleFetch);
+window.addEventListener('load', () => {
+  getData.then(responses => {
+    console.log(responses[0]);
+    console.log(responses[1]);
+    console.log(responses[2]);
+  })
+});
 // .addEventListeners('click', );
 // .addEventListeners('click', );
 // .addEventListeners('click', );
@@ -98,29 +104,7 @@ function getRandomUser(array) {
 };
 
 // DOM Manipulation Functions:
-function handleFetch() {
-  loadRecipes()
-  .then( (data) => {
-    recipeRepository = new RecipeRepository(data)
-    console.log('recipes', data)
-    console.log("repo variable", recipeRepository)
-  })
-  .catch (error => console.log(error));
-  loadUsers()
-  .then((data) => {
-    user = new User(data)
-    console.log('user', data)
-    console.log('user variable', user);
-  })
-  .catch (error => console.log(error));
-  loadIngredients()
-  .then( (data) => {
-    recipe = new Recipe(data)
-    console.log('ingredients', data)
-    console.log('recipe vairable', recipe);
-  })
-  .catch(error => console.log(error));
-};
+
 
 // function displayMainPage() {
 //   showElements([]);
@@ -134,45 +118,6 @@ function handleFetch() {
 //   // hideElements([]);
 //   sortRecipesByName();
 // }
-
-
-
-// function getUser() {
-//   loadUsers().then(userData => {
-//     getRecipes(userData)
-//   })
-// };
-
-// function getRecipes(recipeRepository) {
-//     getIngredients(usersData);
-  
-//   // const userData = getRandomUser(loadUsers());
-//   // user = new User(userData, recipeRepository);
-// };
-
-// function getIngredients(usersData) {
-
-//   recipeRepository.getRecipeIngredientsData(ingredientsData)
-//   )};
-//   const userData = getRandomUser(usersData);
-//   // const ingredients = new Ingredient()
-//   user = new User(userData, recipeRepository);
-// };
-
-// function sortRecipesByName() {
-//   repository = loadRecipes();
-//   console.log('test2: ', repository) 
-//   console.log('load:', loadRecipes())
-//   const recipeArray = repository.recipeData
-//   console.log('repository recipeData: ', repository.recipeData)
-//   const recipes = recipeArray
-//     .map(recipe => recipe.name)
-//     .sort( (a, b) => {
-//       return a - b
-//   });
-
-//   return recipes;
-// };
 
 // function viewSingleRecipe() {
 
