@@ -21,19 +21,23 @@ class User {
   filterFavoritesByName(searchInput) {
     const foundRecipes = this.favoriteRecipes.filter((recipe) => {
       searchInput === recipe.name
+      console.log(recipe);
       return recipe
     })
       return foundRecipes
   }
 
-  filterFavoritesByTag(searchInput) {
-    const foundRecipes = this.favoriteRecipes.filter((recipe) => {
-      searchInput === recipe.tags.includes(searchInput)
-      return recipe
-    })
+
+  filterFavoritesByTag(tags) {
+    const foundRecipes = this.repository.filterByTag(tags, this.favoriteRecipes);
       return foundRecipes;
+    }
+
+  filterFavoritesByIngredient(ingredientName) {
+    const filteredRecipe = this.repository.getRecipeIngredientsData(ingredientName, this.favoriteRecipes);
+    return filteredRecipe;
   }
-  
+
 };
 
 export default User;

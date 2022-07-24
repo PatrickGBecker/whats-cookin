@@ -9,18 +9,28 @@ import Recipe from '../src/classes/Recipe';
 
 describe('User', () => {
   let user;
-  let recipe;
   let recipeName;
   let recipeRepository;
-  let allIngredientsRecipe;
+  let allIngredients;
+  let notEnoughIngredients;
+  let missingIngredients;
+  const tag1 = 'appetizer';
+  const tag2 = 'lunch';
+  const tag3 = 'side dish';
 
   beforeEach( () => {
-    allIngredientsRecipe = new Recipe(recipeData[0]);
-    recipeRepository = new RecipeRepository(recipeData);
     user = new User(usersData[0], recipeRepository);
-    // recipe.getIngredientsData(ingredientsData);
-    allIngredientsRecipe.getIngredientsData(ingredientsData);
-    user.addToFavorites(allIngredientsRecipe);
+    recipeRepository = new RecipeRepository(recipeData);
+    recipeRepository.getRecipesInfo(ingredientsData);
+    allIngredients = new Recipe(recipeData[0]);
+    missingIngredients = new Recipe(recipeData[2]);
+    notEnoughIngredients = new Recipe(recipeData[1]);
+    missingIngredients.getIngredientsData(ingredientsData);
+    notEnoughIngredients.getIngredientsData(ingredientsData);
+    allIngredients.getIngredientsData(ingredientsData);
+    user.addToFavorites(allIngredients);
+    user.addToFavorites(notEnoughIngredients);
+    user.addToFavorites(missingIngredients);
   });
 
   it('should be a function', () => {
@@ -184,27 +194,33 @@ describe('User', () => {
     ]);
   });
 
-    it('should be able to add favorite recipes to a list', () => {
-      user.addToFavorites(recipe);
-
-      expect(user.favoriteRecipes[0]).to.deep.equal(allIngredientsRecipe);
+  it('should be able to add favorite recipes to a list', () => {
+      expect(user.favoriteRecipes).to.deep.equal(
+      [allIngredients, notEnoughIngredients, missingIngredients]);
     });
 
-    it('should be able to remove favorite recipes to a list', () => {
-      user.removeFromFavorites(allIngredientsRecipe);
+  it('should be able to remove favorite recipes to a list', () => {
+      user.removeFromFavorites(notEnoughIngredients);
 
-      expect(user.favoriteRecipes).to.deep.equal(user.favoriteRecipes);
+      expect(user.favoriteRecipes).to.deep.equal([allIngredients, missingIngredients]);
     });
 
-  it('should be able to filter favorite recipes by name', () => {
-    const filteredRecipes = user.filterFavoritesByName('Loaded Chocolate Chip Pudding Cookie Cups')
-
-    expect(filteredRecipes[0]).to.deep.equal(user.favoriteRecipes[0]);
-  });
+  it('should be able to filter favorites by name', function() {
+      expect(user.filterFavoritesByName('Loaded Chocolate Chip Pudding Cookie Cups')).to.deep.equal(user.favoriteRecipes);
+    });
 
   it('should be able to filter recipes by tag', () => {
-    const filteredRecipes = user.filterFavoritesByTag('Loaded Chocolate Chip Pudding Cookie Cups')
-
-    expect(filteredRecipes[0]).to.deep.equal(user.favoriteRecipes[0]);
+    console.log('test', (user.filterFavoritesByTag(tag1)));
+      expect(user.filterFavoritesByTag(tag1)).to.deep.equal([allIngredients]);
   });
+
+  it('should be able to filter favorites by more than one tag', function() {
+     expect(user.filterFavoritesByTag(tag1, tag2, tag3)).to.deep.equal(
+      [allIngredients]);
+  });
+
+  it('should be able to filter favorites by ingredient', function() {
+    expect(user.filterFavoritesByIngredient('wheat flour')).to.deep.equal([allIngredients, notEnoughIngredients]);
+  });
+
 });
