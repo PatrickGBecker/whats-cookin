@@ -2,14 +2,17 @@ import { expect } from 'chai';
 import { recipeData } from '../src/data/sampleRecipeData.js';
 import RecipeRepository from '../src/classes/RecipeRepository';
 
-//Should we have multiple describe block for each test file to break up what is being tested? (i.e. class constructor vs class methods)
-
 describe('Recipe Repository', () => {
   let repository;
+  let repository1;
+  let repository2;
+  let repository3;
 
   beforeEach( () => {
-   
     repository = new RecipeRepository(recipeData);
+    repository1 = new RecipeRepository(recipeData[0]);
+    repository2 = new RecipeRepository(recipeData[1]);
+    repository3 = new RecipeRepository(recipeData[2]);
   })
 
   it('Should be a function', () => {
@@ -21,8 +24,8 @@ describe('Recipe Repository', () => {
   });
 
   it('should have recipes', () => {
-    expect(repository.recipes[2].id).to.equal(550940);
-    expect(repository.recipes[2].name).to.equal('Egg and Rapini Casserole');
+    expect(repository3.recipes.id).to.equal(550940);
+    expect(repository3.recipes.name).to.equal('Egg and Rapini Casserole');
   });
 
   it('should have tags for each recipe', () => {
@@ -44,7 +47,7 @@ describe('Recipe Repository', () => {
       { id: 2050, quantity: { amount: 0.5, unit: 'tsp' } }
     ]
     
-    expect(repository.recipes[0].ingredients).to.deep.equal(recipeIngredients1);
+    expect(repository1.recipes.ingredients).to.deep.equal(recipeIngredients1);
   });
 
   it('should have ingredient information for a different recipe', () => {
@@ -63,14 +66,14 @@ describe('Recipe Repository', () => {
       { id: 19335, quantity: { amount: 2, unit: 'teaspoons' } }
     ]
 
-    expect(repository.recipes[1].ingredients).to.deep.equal(recipeIngredients2)
+    expect(repository2.recipes.ingredients).to.deep.equal(recipeIngredients2)
   })
 
   it('should filter recipes by tags', () => {
     const expected =  repository.filterByTag('side dish')
     // console.log(expected.name);
 
-    expect(expected[0]).to.deep.equal(repository.recipes[1]);
+    expect(expected[0]).to.deep.equal(repository2.recipes);
   })
 
   it('should not return a recipe if tag is not found', () => {
@@ -83,7 +86,7 @@ describe('Recipe Repository', () => {
   it('should filter recipes by name', () => {
     const expected = repository.filterByRecipeName('Loaded Chocolate Chip Pudding Cookie Cups');
 
-    expect(expected[0]).to.deep.equal(repository.recipes[0])
+    expect(expected[0]).to.deep.equal(repository1.recipes)
   });
 
   it('should not return a recipe if name is not found', () => {
