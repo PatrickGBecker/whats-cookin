@@ -1,7 +1,6 @@
 import '../dist/bundle.js';
 import './styles.css';
 import getData from './apiCalls';
-import { loadUsers, loadRecipes, loadIngredients } from './apiCalls';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import Ingredient from './classes/Ingredient'
@@ -46,7 +45,7 @@ let allSections = document.querySelectorAll('section');
 
 // Global Variables:
 let recipeData;
-let ingredientData;
+let ingredientsData;
 let userData;
 let tags = [];
 let recipeRepository;
@@ -54,16 +53,22 @@ let recipes;
 let ingredients;
 let user;
 
-
 // Event Listeners:
-window.addEventListener('load', () => {
-  getData.then(responses => {
-    userData = responses[0];
-    recipeData = responses[1];
-    ingredientData = responses[2];
-  })
-});
-window.addEventListener('load', getUser);
+
+Promise.all([
+  getData(`https://whats-cookin-api-data.herokuapp.com/api/v1/users`),
+  getData(`https://whats-cookin-api-data.herokuapp.com/api/v1/recipes`),
+  getData(`https://whats-cookin-api-data.herokuapp.com/api/v1/ingredients`),
+])
+  .then(data => {
+
+    userData = data[0];
+    recipeData = data[1];
+    ingredientsData = data[2];
+
+    getUser(userData);
+})
+
 // console.log(displayFavoritesView());
 allRecipesTabButton.addEventListener('click', displayAllRecipes);
 favoritesTabButton.addEventListener('click', displayFavoritesView);
@@ -89,35 +94,24 @@ function removeStyling(elements, className) {
   elements.classList.remove(className)
 };
 
-
-function getRandomUser(array) {
-  const index = Math.floor(Math.random() * array.length);
-  const userData = array[index];
-  return userData;
-};
-
-function getUser() {
-  loadUsers().then(usersData => {
-    getRecipes(usersData);
-  });
+function getUser(usersData) {
+  getRecipes(usersData);
 };
 
 function getRecipes(usersData) {
-  loadRecipes().then(recipeData => {
-    recipeRepository = new RecipeRepository(recipeData);
-    getIngredients(usersData);
-  });
+  recipeRepository = new RecipeRepository(recipeData);
+  getIngredients(usersData);
 };
 
 function getIngredients(usersData) {
-  loadIngredients().then(ingredientsData => {
     recipeRepository.getRecipesInfo(ingredientsData);
-
     const userData = getRandomUser(usersData);
     user = new User(userData, recipeRepository);
-  });
 };
 
+function getRandomUser(array) {
+  return Math.floor(Math.random() * array.length);
+};
 
 function createRecipeCard(container, recipes) {
   container.innerHTML = '';
