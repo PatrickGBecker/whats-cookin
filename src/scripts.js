@@ -24,7 +24,7 @@ let allRecipesView = document.querySelector('.all-recipes-view');
 let favoritesView = document.querySelector('.favorites-view');
 let singleRecipeView = document.querySelector('.single-recipe-view');
 
-//Query Selectors for specific parts on a pageview:
+//Query Selectors for specific parts on a page view:
 let allRecipesViewContainer = document.querySelector('.all-recipes-view-recipes-container');
 let favoritesViewContainer = document.querySelector('.favorites-view-favorites-container');
 let singleRecipeViewContainer = document.querySelector('.single-recipe-view-recipe-details');
