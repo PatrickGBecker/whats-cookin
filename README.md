@@ -1,16 +1,45 @@
-# What's Cookin'? Starter Kit
+# What's Cookin'
 
-The details of this project are outlined in the <a href="https://frontend.turing.edu/projects/What%27sCookin-PartOne.html" target="\__blank">project spec</a>.
+- [Project Spec - Part I](https://frontend.turing.edu/projects/whats-cookin-part-one.html)
+- [Project Spec - Part II](https://frontend.turing.edu/projects/whats-cookin-part-two.html)
 
-## Set Up
+## Contributors
 
-1. Within your group, decide on one person to have the project repository on their Github account. This person will *fork* this repository - on the top right corner of the page, click the fork button.
-2. All group members should then clone down the forked repository (make sure that everyone is added as a collaborator as well). Since you don't want your project to be named "whats-cookin-starter-kit", add an optional argument after the repo url when cloning. The command should look like this: `git clone [remote-address] [what you want to name the repo]`.
-3. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` or `npm i` to install project dependencies.
-4. Run npm start in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page). `Control + C` is the command to stop running the local server. Closing the terminal without stopping the server first could allow the server to continue to run in the background and cause problems. This command is not specific to Webpack; make note of it for future use.
-5. Make sure both members of your team are collaborators on the forked repo.
-6. Do not run `npm audit fix --force`. This will update to the latest version of packages. We need to be using `webpack-dev-server@3.11.2` which is not the latest version. If you start to run into Webpack errors, first check that all group members are using the correct version.
+- [Patrick Becker](https://github.com/PatrickGBecker)
+- [Stephanie Guzman](https://github.com/stephanieguzm)
+- [Emily Miles](https://github.com/emilyjmiles)
 
-## Testing
+## Summary (Project Currently in Development)
 
-Mocha and chai are already set up, with a boilerplate test for you.
+What's Cookin' is a virtual recipe database, where users can browse and save recipes for later use! The user will be able to view all recipes and add/view their favorite recipes in the favorites section. Users will be able to search for meals by name and / or ingredient! 
+
+## Set Up Instructions
+
+### Backend Set Up
+
+1. Go to this [repository](https://github.com/turingschool-examples/whats-cookin-api)
+2. Follow Set Up instructions.
+
+### Frontend Set Up
+
+1. Clone down this repository.
+  ```
+  git clone git@github.com:PatrickGBecker/whats-cookin.git
+  ```
+2. In your terminal, run:
+  ```
+  npm install
+  npm start
+  ```
+3. Enter the following url in your browser: http://localhost:8080/
+4. Explore the website.
+
+
+Technologies Used
+- Mocha
+- Chai
+- JavaScript
+- Fetch API
+- Github Project Board Project Management
+
+
