@@ -16,7 +16,7 @@ describe('Recipe Class', () => {
     });
 
     it('should be an instance of Recipe', () => {
-        expect(recipe).to.be.an.instanceof(Recipe);
+        expect(recipe).to.be.an.instanceOf(Recipe);
     });
 
   describe('Recipe constructor properties', function() {
@@ -29,7 +29,7 @@ describe('Recipe Class', () => {
     });
 
     it('should store ingredients', () => {
-      expect(recipe.ingredients).to.equal(recipeData[0].ingredients)
+      expect(recipe.ingredients).to.deep.equal(recipeData[0].ingredients)
     });
 
     it('should be able to create instances of Ingredients and store them', function() {
@@ -53,7 +53,7 @@ describe('Recipe Class', () => {
 
     it('should store a list of tags', () => {
       expect(recipe.tags).to.be.an('array');
-      expect(recipe.tags).to.equal(recipeData[0].tags);
+      expect(recipe.tags).to.deep.equal(recipeData[0].tags);
     });
 
 
