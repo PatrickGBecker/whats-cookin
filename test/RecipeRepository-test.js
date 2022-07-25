@@ -4,15 +4,9 @@ import RecipeRepository from '../src/classes/RecipeRepository';
 
 describe('Recipe Repository', () => {
   let repository;
-  let repository1;
-  let repository2;
-  let repository3;
 
   beforeEach( () => {
     repository = new RecipeRepository(recipeData);
-    repository1 = new RecipeRepository(recipeData[0]);
-    repository2 = new RecipeRepository(recipeData[1]);
-    repository3 = new RecipeRepository(recipeData[2]);
   })
 
   it('Should be a function', () => {
@@ -24,12 +18,13 @@ describe('Recipe Repository', () => {
   });
 
   it('should have recipes', () => {
-    expect(repository3.recipes.id).to.equal(550940);
-    expect(repository3.recipes.name).to.equal('Egg and Rapini Casserole');
+    expect(repository.recipes).to.deep.equal(recipeData)
   });
 
   it('should have tags for each recipe', () => {
+    expect(repository.recipes[0].tags).to.deep.equal(['antipasti', 'starter', 'snack', 'appetizer', 'antipasto', 'hor d\'oeuvre'])
     expect(repository.recipes[1].tags).to.deep.equal(['side dish'])
+    expect(repository.recipes[2].tags).to.deep.equal(['lunch', 'main course', 'main dish', 'dinner'])
   });
 
   it('should have ingredient information for a recipe', () => {
@@ -47,7 +42,7 @@ describe('Recipe Repository', () => {
       { id: 2050, quantity: { amount: 0.5, unit: 'tsp' } }
     ]
     
-    expect(repository1.recipes.ingredients).to.deep.equal(recipeIngredients1);
+    expect(repository.recipes[0].ingredients).to.deep.equal(recipeIngredients1);
   });
 
   it('should have ingredient information for a different recipe', () => {
@@ -66,14 +61,17 @@ describe('Recipe Repository', () => {
       { id: 19335, quantity: { amount: 2, unit: 'teaspoons' } }
     ]
 
-    expect(repository2.recipes.ingredients).to.deep.equal(recipeIngredients2)
+    expect(repository.recipes[1].ingredients).to.deep.equal(recipeIngredients2)
   })
 
   it('should filter recipes by tags', () => {
-    const expected =  repository.filterByTag('side dish')
-    // console.log(expected.name);
+    const expected1 =  repository.filterByTag('appetizer')
+    const expected2 =  repository.filterByTag('side dish')
+    const expected3 =  repository.filterByTag('dinner')
 
-    expect(expected[0]).to.deep.equal(repository2.recipes);
+    expect(expected1).to.deep.equal([repository.recipes[0]]);
+    expect(expected2).to.deep.equal([repository.recipes[1]]);
+    expect(expected3).to.deep.equal([repository.recipes[2]]);
   })
 
   it('should not return a recipe if tag is not found', () => {
@@ -84,15 +82,54 @@ describe('Recipe Repository', () => {
   });
 
   it('should filter recipes by name', () => {
-    const expected = repository.filterByRecipeName('Loaded Chocolate Chip Pudding Cookie Cups');
+    const expected1 = repository.filterByRecipeName('Loaded Chocolate Chip Pudding Cookie Cups');
+    const expected2 = repository.filterByRecipeName('Elvis Pancakes');
+    const expected3 = repository.filterByRecipeName('Egg and Rapini Casserole');
 
-    expect(expected[0]).to.deep.equal(repository1.recipes)
+    expect(expected1).to.deep.equal([repository.recipes[0]])
+    expect(expected2).to.deep.equal([repository.recipes[1]])
+    expect(expected3).to.deep.equal([repository.recipes[2]])
   });
 
   it('should not return a recipe if name is not found', () => {
     const expected = repository.filterByRecipeName('Creme L\'ainglaise')
+    
+    expect(expected).to.deep.equal([]);
+    expect(expected.name).to.equal(undefined);
+  })
+  
+  it('should get recipes that includes search term', () => {
+    const expected1 = repository.getRecipeIngredientsData('Loaded Chocolate Chip Pudding Cookie Cups');
+    const expected2 = repository.getRecipeIngredientsData('instant vanilla pudding');
+    const expected3 = repository.getRecipeIngredientsData('proscuitto');
+    
+    expect(expected1).to.deep.equal([repository.recipes[0]])
+    expect(expected2).to.deep.equal([repository.recipes[1]])
+    expect(expected3).to.deep.equal([repository.recipes[2]])
+  });
+  
+  it('should return an empty array if no recipes match the search term', () => {
+    const expected = repository.getRecipeIngredientsData('broccoli');
+    
+    expect(expected).to.deep.equal([]);
+    expect(expected.name).to.equal(undefined);
+  })
+
+  it.skip('should get all data for a given recipe', () => {
+    const expected1 = repository.getRecipeInfo();
+    const expected2 = repository.getRecipeInfo();
+    const expected3 = repository.getRecipeInfo();
+
+    expect(expected1).to.deep.equal(repository.recipes[0]);
+    expect(expected2).to.deep.equal(repository.recipes[1]);
+    expect(expected3).to.deep.equal(repository.recipes[2]);
+  });
+
+  it.skip('should not return any recipe data if the recipe is not found', () => {
+    const expected = repository.getRecipeInfo();
 
     expect(expected).to.deep.equal([]);
     expect(expected.name).to.equal(undefined);
   })
+
 });
