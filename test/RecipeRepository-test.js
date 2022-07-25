@@ -2,13 +2,10 @@ import { expect } from 'chai';
 import { recipeData } from '../src/data/sampleRecipeData.js';
 import RecipeRepository from '../src/classes/RecipeRepository';
 
-//Should we have multiple describe block for each test file to break up what is being tested? (i.e. class constructor vs class methods)
-
 describe('Recipe Repository', () => {
   let repository;
 
   beforeEach( () => {
-   
     repository = new RecipeRepository(recipeData);
   })
 
@@ -21,12 +18,13 @@ describe('Recipe Repository', () => {
   });
 
   it('should have recipes', () => {
-    expect(repository.recipes[2].id).to.equal(550940);
-    expect(repository.recipes[2].name).to.equal('Egg and Rapini Casserole');
+    expect(repository.recipes).to.deep.equal(recipeData)
   });
 
   it('should have tags for each recipe', () => {
+    expect(repository.recipes[0].tags).to.deep.equal(['antipasti', 'starter', 'snack', 'appetizer', 'antipasto', 'hor d\'oeuvre'])
     expect(repository.recipes[1].tags).to.deep.equal(['side dish'])
+    expect(repository.recipes[2].tags).to.deep.equal(['lunch', 'main course', 'main dish', 'dinner'])
   });
 
   it('should have ingredient information for a recipe', () => {
@@ -67,10 +65,13 @@ describe('Recipe Repository', () => {
   })
 
   it('should filter recipes by tags', () => {
-    const expected =  repository.filterByTag('side dish')
-    // console.log(expected.name);
+    const expected1 =  repository.filterByTag('appetizer')
+    const expected2 =  repository.filterByTag('side dish')
+    const expected3 =  repository.filterByTag('dinner')
 
-    expect(expected[0]).to.deep.equal(repository.recipes[1]);
+    expect(expected1).to.deep.equal([repository.recipes[0]]);
+    expect(expected2).to.deep.equal([repository.recipes[1]]);
+    expect(expected3).to.deep.equal([repository.recipes[2]]);
   })
 
   it('should not return a recipe if tag is not found', () => {
@@ -81,15 +82,54 @@ describe('Recipe Repository', () => {
   });
 
   it('should filter recipes by name', () => {
-    const expected = repository.filterByRecipeName('Loaded Chocolate Chip Pudding Cookie Cups');
+    const expected1 = repository.filterByRecipeName('Loaded Chocolate Chip Pudding Cookie Cups');
+    const expected2 = repository.filterByRecipeName('Elvis Pancakes');
+    const expected3 = repository.filterByRecipeName('Egg and Rapini Casserole');
 
-    expect(expected[0]).to.deep.equal(repository.recipes[0])
+    expect(expected1).to.deep.equal([repository.recipes[0]])
+    expect(expected2).to.deep.equal([repository.recipes[1]])
+    expect(expected3).to.deep.equal([repository.recipes[2]])
   });
 
   it('should not return a recipe if name is not found', () => {
     const expected = repository.filterByRecipeName('Creme L\'ainglaise')
+    
+    expect(expected).to.deep.equal([]);
+    expect(expected.name).to.equal(undefined);
+  })
+  
+  it('should get recipes that includes search term', () => {
+    const expected1 = repository.getRecipeIngredientsData('Loaded Chocolate Chip Pudding Cookie Cups');
+    const expected2 = repository.getRecipeIngredientsData('instant vanilla pudding');
+    const expected3 = repository.getRecipeIngredientsData('proscuitto');
+    
+    expect(expected1).to.deep.equal([repository.recipes[0]])
+    expect(expected2).to.deep.equal([repository.recipes[1]])
+    expect(expected3).to.deep.equal([repository.recipes[2]])
+  });
+  
+  it('should return an empty array if no recipes match the search term', () => {
+    const expected = repository.getRecipeIngredientsData('broccoli');
+    
+    expect(expected).to.deep.equal([]);
+    expect(expected.name).to.equal(undefined);
+  })
+
+  it.skip('should get all data for a given recipe', () => {
+    const expected1 = repository.getRecipeInfo();
+    const expected2 = repository.getRecipeInfo();
+    const expected3 = repository.getRecipeInfo();
+
+    expect(expected1).to.deep.equal(repository.recipes[0]);
+    expect(expected2).to.deep.equal(repository.recipes[1]);
+    expect(expected3).to.deep.equal(repository.recipes[2]);
+  });
+
+  it.skip('should not return any recipe data if the recipe is not found', () => {
+    const expected = repository.getRecipeInfo();
 
     expect(expected).to.deep.equal([]);
     expect(expected.name).to.equal(undefined);
   })
+
 });
