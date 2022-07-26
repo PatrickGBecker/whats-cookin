@@ -116,17 +116,18 @@ describe('Recipe Repository', () => {
   })
 
   it('should get all data for a given recipe', () => {
-    const expected1 = repository.getRecipesInfo();
-    const expected2 = repository.getRecipesInfo();
-    const expected3 = repository.getRecipesInfo();
 
-    expect(expected1).to.deep.equal(repository.recipes[0]);
-    expect(expected2).to.deep.equal(repository.recipes[1]);
-    expect(expected3).to.deep.equal(repository.recipes[2]);
+    const expected1 = repository.getRecipeIngredientsData('semi sweet chips');
+    const expected2 = repository.getRecipeIngredientsData('banana');
+    const expected3 = repository.getRecipeIngredientsData('proscuitto');
+
+    expect(expected1).to.deep.equal([repository.recipes[0]]);
+    expect(expected2).to.deep.equal([repository.recipes[1]]);
+    expect(expected3).to.deep.equal([repository.recipes[2]]);
   });
 
-  it.skip('should not return any recipe data if the recipe is not found', () => {
-    const expected = repository.getRecipeInfo();
+  it('should not return any recipe data if the recipe is not found', () => {
+    const expected = repository.getRecipeIngredientsData();
 
     expect(expected).to.deep.equal([]);
     expect(expected.name).to.equal(undefined);

@@ -29,7 +29,7 @@ class RecipeRepository {
     return filteredRecipesByName;
   }
 
-  getRecipeIngredientsData(searchInput) {
+  getRecipeIngredientsData(ingredientName, searchInput) {
       const recipes = this.recipes;
       const filteredRecipes = recipes
         .reduce((searchedRecipes, recipe) => {
@@ -38,7 +38,7 @@ class RecipeRepository {
           } else {
             const matchedIngredient = recipe.ingredients
             .find((ingredient) => {
-              return ingredient.name.includes(searchInput);
+              return ingredient.name.includes(ingredientName);
             });
             if(matchedIngredient) {
               searchedRecipes.push(recipe);
