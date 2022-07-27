@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { recipeData } from '../src/data/sampleRecipeData.js';
 import { ingredientsData } from '../src/data/sampleIngredientData';
 import Ingredient from '../src/classes/Ingredient';
+import Recipe from '../src/classes/Recipe';
 import RecipeRepository from '../src/classes/RecipeRepository';
 
 describe('Recipe Repository', () => {
@@ -9,7 +10,7 @@ describe('Recipe Repository', () => {
 
   beforeEach( () => {
     repository = new RecipeRepository(recipeData);
-    repository.getRecipesInfo(ingredientsData);
+    // repository.getRecipesInfo(ingredientsData);
   })
 
   it('Should be a function', () => {
@@ -22,6 +23,21 @@ describe('Recipe Repository', () => {
 
   it('should have recipes', () => {
     expect(repository.recipes[0].id).to.equal(recipeData[0].id)
+  });
+
+  it('should be able to create instances of Recipes and store them', function() {
+    const repo = new RecipeRepository(recipeData);
+    let ingredient1 = repo.recipes[0].ingredients[0];
+
+    expect(ingredient1.name).to.equal(undefined);
+    expect(ingredient1).not.instanceOf(Recipe);
+
+    repository.getRecipesInfo(ingredientsData);
+
+    expect(repository.recipes).to.be.an('array');
+    expect(repository.recipes.length).to.deep.equal(3);
+    expect(repository.recipes[0]).to.be.an.instanceOf(Recipe);
+    expect(repository.recipes[0].name).to.equal('Loaded Chocolate Chip Pudding Cookie Cups');
   });
 
   it('should have tags for each recipe', () => {
@@ -43,26 +59,6 @@ describe('Recipe Repository', () => {
       expect(ingredient1.name).to.equal('wheat flour');
       expect(ingredient1).instanceOf(Ingredient);
     });
-
-
-  // it('should have ingredient information for a different recipe', () => {
-  //   const recipeIngredients2 = [
-  //     { id: 20081, quantity: { amount: 1, unit: 'cup' } },
-  //     { id: 18371, quantity: { amount: 2, unit: 'teaspoons' } },
-  //     { id: 9040, quantity: { amount: 12, unit: 'servings' } },
-  //     { id: 20011, quantity: { amount: 1, unit: 'cup' } },
-  //     { id: 1001, quantity: { amount: 2, unit: 'tablespoons' } },
-  //     { id: 1001, quantity: { amount: 6, unit: 'tablespoons' } },
-  //     { id: 1230, quantity: { amount: 2, unit: 'cups' } },
-  //     { id: 1123, quantity: { amount: 2, unit: '' } },
-  //     { id: 19296, quantity: { amount: 12, unit: 'servings' } },
-  //     { id: 16098, quantity: { amount: 12, unit: 'servings' } },
-  //     { id: 2047, quantity: { amount: 1, unit: 'teaspoon' } },
-  //     { id: 19335, quantity: { amount: 2, unit: 'teaspoons' } }
-  //   ]
-  //
-  //   expect(repository.recipes[1].ingredients).to.deep.equal(recipeIngredients2)
-  // })
 
   it('should filter recipes by tags', () => {
     const expected1 =  repository.filterByTag('appetizer')
@@ -99,6 +95,8 @@ describe('Recipe Repository', () => {
   })
 
   it('should get recipes that includes search term', () => {
+    repository.getRecipesInfo(ingredientsData);
+
     const expected1 = repository.getRecipeIngredientsData('instant vanilla pudding');
     const expected2 = repository.getRecipeIngredientsData('wheat flour');
     const expected3 = repository.getRecipeIngredientsData('proscuitto');
@@ -109,6 +107,7 @@ describe('Recipe Repository', () => {
   });
 
   it('should return an empty array if no recipes match the search term', () => {
+    repository.getRecipesInfo(ingredientsData);
     const expected = repository.getRecipeIngredientsData('broccoli');
 
     expect(expected).to.deep.equal([]);
@@ -116,17 +115,20 @@ describe('Recipe Repository', () => {
   })
 
   it('should get all data for a given recipe', () => {
-    const expected1 = repository.getRecipesInfo();
-    const expected2 = repository.getRecipesInfo();
-    const expected3 = repository.getRecipesInfo();
+    repository.getRecipesInfo(ingredientsData);
 
-    expect(expected1).to.deep.equal(repository.recipes[0]);
-    expect(expected2).to.deep.equal(repository.recipes[1]);
-    expect(expected3).to.deep.equal(repository.recipes[2]);
+    const expected1 = repository.getRecipeIngredientsData('semi sweet chips');
+    const expected2 = repository.getRecipeIngredientsData('banana');
+    const expected3 = repository.getRecipeIngredientsData('proscuitto');
+
+    expect(expected1).to.deep.equal([repository.recipes[0]]);
+    expect(expected2).to.deep.equal([repository.recipes[1]]);
+    expect(expected3).to.deep.equal([repository.recipes[2]]);
   });
 
-  it.skip('should not return any recipe data if the recipe is not found', () => {
-    const expected = repository.getRecipeInfo();
+  it('should not return any recipe data if the recipe is not found', () => {
+    repository.getRecipesInfo(ingredientsData);
+    const expected = repository.getRecipeIngredientsData();
 
     expect(expected).to.deep.equal([]);
     expect(expected.name).to.equal(undefined);

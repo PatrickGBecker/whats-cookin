@@ -210,7 +210,6 @@ describe('User', () => {
     });
 
   it('should be able to filter recipes by tag', () => {
-    console.log('test', (user.filterFavoritesByTag(tag1)));
       expect(user.filterFavoritesByTag(tag1)).to.deep.equal([allIngredients]);
   });
 
