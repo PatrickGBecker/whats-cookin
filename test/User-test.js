@@ -205,7 +205,7 @@ describe('User', () => {
       expect(user.favoriteRecipes).to.deep.equal([allIngredients, missingIngredients]);
     });
 
-  it('should be able to filter favorites by name', function() {
+  it('should be able to filter favorites by name', () => {
       expect(user.filterFavoritesByName('Loaded Chocolate Chip Pudding Cookie Cups')).to.deep.equal(user.favoriteRecipes);
     });
 
@@ -213,13 +213,45 @@ describe('User', () => {
       expect(user.filterFavoritesByTag(tag1)).to.deep.equal([allIngredients]);
   });
 
-  it('should be able to filter favorites by more than one tag', function() {
+  it('should be able to filter favorites by more than one tag', () => {
      expect(user.filterFavoritesByTag(tag1, tag2, tag3)).to.deep.equal(
       [allIngredients]);
   });
 
-  it('should be able to filter favorites by ingredient', function() {
+  it('should be able to filter favorites by ingredient', () => {
     expect(user.filterFavoritesByIngredient('wheat flour')).to.deep.equal([allIngredients, notEnoughIngredients]);
   });
+
+  it('should be able to check pantry for ingredients needed to cook a recipe', () => {
+    console.log('user pantry', user.pantry[2].ingredient);
+    console.log('allIngredients', allIngredients.ingredients[0].id);
+      expect(user.checkPantry(allIngredients)).to.equal(false) //should be true
+      expect(user.checkPantry(missingIngredients)).to.equal(false)
+    });
+
+  it('should be able to check user pantry for ingredient amount necessary to cook recipe', () => {
+       expect(user.checkPantry(notEnoughIngredients)).to.equal(false)
+       expect(user.checkPantry(missingIngredients)).to.equal(false)
+     });
+
+  it('should be able to return the pantry ingredients', function() {
+    
+      const expected = [
+        '4 flat leaf parsley leaves',
+        '10 kosher salt',
+        '5 wheat flour',
+        '5 whole garlic clove',
+        '6 salt',
+        '8 eggs',
+        '4 vanilla',
+        '5 buck wheat flour'
+      ]
+      const pantryIngredients = user.returnPantryIngredients()
+
+      expect(pantryIngredients[0]).to.be.a('string');
+      expect(pantryIngredients).to.deep.equal(expected);
+      expect(pantryIngredients.length).to.equal(8);
+    });
+
 
 });

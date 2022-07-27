@@ -21,12 +21,10 @@ class User {
   filterFavoritesByName(searchInput) {
     const foundRecipes = this.favoriteRecipes.filter((recipe) => {
       searchInput === recipe.name
-      console.log(recipe);
       return recipe
     })
       return foundRecipes
   }
-
 
   filterFavoritesByTag(tags) {
     const foundRecipes = this.repository.filterByTag(tags, this.favoriteRecipes);
@@ -36,6 +34,32 @@ class User {
   filterFavoritesByIngredient(ingredientName) {
     const filteredRecipe = this.repository.getRecipeIngredientsData(ingredientName, this.favoriteRecipes);
     return filteredRecipe;
+  }
+
+  checkPantry(recipe) {
+    let match = 0;
+    recipe.ingredients.forEach(recipeIngredient => {
+      this.pantry.forEach(pantryIngredient => {
+        if (recipeIngredient.id === pantryIngredient.ingredient && pantryIngredient.amount >= recipeIngredient.amount) {
+          equal += 1;
+      }
+    })
+  })
+    return match === recipe.ingredients.length;
+  }
+
+
+  returnPantryIngredients() {
+    let matchingIngredient;
+console.log('pantry', this.pantry);
+    return this.pantry.reduce((acc, pantryIngredient) => {
+      this.repository.recipes.find(recipe => {
+        matchingIngredient = recipe.ingredients.find(ingredient => pantryIngredient.ingredient === ingredient.id)
+      return matchingIngredient;
+      })
+      acc.push(`${pantryIngredient.amount} ${matchingIngredient}`)
+      return acc
+    }, [])
   }
 
 };
