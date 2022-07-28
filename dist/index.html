@@ -1,121 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>What's Cookin?!</title>
+    <title>🥘 What's Cookin?! 🥘</title>
   </head>
   <body>
-    <nav class="nav-bar">
-      <div class="nav-bar-tabs">
-        <button type="button" class="nav-tabs-all-recipes" id="allRecipesButton">All Recipes</button>
-        <button type="button" class="nav-tabs-favorites" id="favoritesViewButton">Favorites</button>
-      </div>
-      <div class="nav-bar-search">
-        <form class="search-bar">
-          <label for="searchBarInput" class="search-bar-search-label">Search</label>
-          <input type="search" class="search-bar-search-input" name="searchInput" value="" id="searchBarInput">
-        </form>
-        <button type="button" class="search-bar-main-button" id="mainViewButton" label="to-main">
-          <p class="search-bar-main-view-button-text">What's Cookin'?!</p>
-          <div class="icons" label="home-icon"></div>
-        </button>
-      </div>
-    </nav>
-    <main class="main">
-      <section class="main-view" id="mainViewSection">
-        <section class="tag-section-recipes-container hidden" id="tagRecipesContainer"></section>
-        <div class="main-page-heading" id="mainPageUtensilsImage" alt="A sketch of cooking utensils">
-          
-          <h1 class="main-title">What's Cookin'?!</h1>
-          <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg"/>
+    <main> 
+      <nav role="navigation"class="nav-bar-header">
+        <div class="nav-bar-buttons">
+          <button type="button" class="view-home-button" id="homeButton">Home</button>
+          <button type="button" class="view-all-recipes" id="allRecipesButton">All Recipes</button>
+          <button type="button" class="view-favorites" id="favoritesButton">Favorites</button>
         </div>
-        <article class="tag-label-container" id="tagLabelIcon">
-          <div class="first-row-tag-buttons">
-            <button class="tag-label-button" value="snacks"
-              <p class="tag-label-name">snacks</p>
-            </button>
-            <button class="tag-label-button" value="appetizers"
-              <p class="tag-label-name">appetizers</p>
-            </button>
-            <button class="tag-label-button" value="side dishes"
-              <p class="tag-label-name">side dishes</p>
-            </button>
-            <button class="tag-label-button" value="soups"
-              <p class="tag-label-name">soups</p>
-            </button>
-          </div>
-          <div class="second-row-tag-buttons">
-            <button class="tag-label-button" value="salads"
-              <p class="tag-label-name">salads</p>
-            </button>
-            <button class="tag-label-button" value="breakfast"
-              <p class="tag-label-name">breakfast</p>
-            </button>
-            <button class="tag-label-button" value="lunch"
-              <p class="tag-label-name">lunch</p>
-            </button>
-            <button class="tag-label-button" value="dinner"
-              <p class="tag-label-name">dinner</p>
-            </button>
-            <button class="tag-label-button" value="dessert"
-              <p class="tag-label-name">dessert</p>
-            </button>
-           </div>
-        </article>
-      </section>
-      <section class="searched-recipes-recipe-results-container hidden" id="searchedRecipesContainer">
-        <h2 class="search-results">Search Results:</h2>
-        <p class="searched-recipes-no-results-container hidden" id="noResultsContainer">Sorry, no recipes match your search</p>
-        <section class="recipes-container-search-results" id="searchedRecipes"></section>
-      </section>
-      <section class="all-recipes-view hidden" id="allRecipesSection"></section>
-        <div class="top-banner">
-          <h1 class="top-banner-title">All Recipes</h1>
+        <div class="nav-bar-search">
+          <form role="search" class="search-bar">
+            <label for="searchBarInput" class="search-bar-label">Search</label>
+            <input type="search" class="search-input" name="searchInput" value="" id="searchBarInput">
+            <button type="submit"class="search-submit-button" id="submitSearchButton">🔎</button>
+          </form>
         </div>
-        <section class="all-recipes-view-recipes-container" id="allRecipesContainer"></section>
+      </nav>
+      <section class="home-view-section" id="homeViewSection">
+        <section class="view home-view" id="homeView">
+          <div class="header home-view-header" id="homeViewHeader" >
+            <h1 class="home-title">What's Cookin'?!</h1>
+            <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/>
+          </div>
+        </section>
+        <section class="tag-buttons" id="tagButtonsSection">
+          <nav role="navigation" class="tag-buttons" id="tagLabelIcon">
+            <div class="first-row-tag-buttons">
+              <button type="button" class="tags snacks-button" value="snacks">snacks</button>
+              <button type="button" class="tags appetizers-button" value="appetizers">appetizers</button>
+              <button type="button" class="tags side-dishes-button" value="side dishes">side dishes</button>
+              <button type="button" class="tags soups-button" value="soups">soups</button>
+            </div>
+            <div class="second-row-tag-buttons">
+              <button type="button" class="tags salads-button" value="salads">salads</button>
+              <button type="button" class="tags breakfast-button" value="breakfast">breakfast</button>
+              <button type="button" class="tags lunch-button" value="lunch">lunch</button>
+              <button type="button" class="tags dinner-button" value="dinner">dinner</button>
+              <button type="button" class="tags dessert-button" value="dessert">dessert</button>
+            </div>
+          </nav>
+        </section>
       </section>
-      <section class="favorites-view hidden" id="favoriteRecipesSection">
-        <h1 class="top-banner_title">Favorite Recipes</h1>
-        <p class="recipe-container-no-favorites" id="noFavoritesMessage"><div class="icons">favorite-border</div
-        >No favorite recipes have been added yet. Check out the all recipes section!<div class="icons">favorite_border</div></p>
-        <section class="favorites-view-favorites-container hidden" id="favoriteTaggedRecipesContainer">
-        </section>
-        <section class="single-recipe-view hidden" id="singleRecipeView">
-          <h1 class="recipe-title" id="recipeName">Recipe Name</h1>
-          <div class="single-recipe-view-recipe-details">
-            <div class="recipe-details-container">
-              <h2>Ingredients</h1>
-              <ol class="ingredient-list" id="recipeIngredients"></ol>
-              <p class="total-cost">Cost:<span class="icons"> money-icon</span><span id="recipeCost"></span></p>
-            </div>
-            <div class="recipe-details-container">
-              <img src="https://health.clevelandclinic.org/wp-content/uploads/sites/3/2016/10/foodJointPainRelief-142336977-770x533-1.jpg" class="recipe-image" id="recipeImage" alt="A beautiful photograph of luscious food crafted with legendary skill">
-              <div class="recipe-buttons-container">
-                <button type="button" class="recipe-button-favorite-button" id="addToFavoritesButton">
-                  <span class="icons" label="favorites-icon"></span>
-                  <p label="add to favorites">Add to Favorites</p>
-                </button>
-                <button type="button" class="recipe-button-favorite-button hidden" id="removeFromFavoritesButton">
-                  <span class="icons" label="active-favorites-icon"></span>
-                  <p>Remove From Favorites</p>
-                </button>
-              </div>
-            </div>
+      <section class="all-recipes-view-section" id="allRecipesViewSection">
+        <section class="view all-recipes-view" id="allRecipesView">
+          <div class="header all-recipes-view-header" id="allRecipesViewHeader" >
+            <h1 class="all-recipes-title">All Recipes</h1>
+            <!-- <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/> -->
           </div>
-          <div class="single-recipe-view-instructions">
-            <h2>Instructions</h2>
-            <ol class="instructions-list" id="recipeInstructions"></ol>
-          </div>
-          <aside>
-            <h2><span class="icons">food-icon</span>Your Pantry</h2>
-            <ul class="pantry-ingredients" id="pantryIngredients">Pantry list
-            </ul>
-            <button class="cook-recipe-button" id="cookRecipeButton">Cook Recipe</button>
-          </aside>
+          <div class="content all-recipes-view-content" id="allRecipesViewContent">  
+          </div> 
         </section>
-      </main>
+      </section>
+      <section class="favorites-view-section" id="favoritesViewSection">
+        <section class="view favorites-view" id="favoritesView">
+          <div class="header favorites-view-header" id="favoritesViewHeader" >
+            <h1 class="favorites-title">Your Favorite Recipes!</h1>
+            <!-- <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/> -->
+          </div>
+          <div class="content favorites-view-content" id="favoritesViewContent">
+            <p role="alert" class="no-favorites-added-alert" id="noFavoritesAdded">No favorite recipes have been added yet. Check out the all recipes section!</p>
+          </div>
+        </section>
+      </section>
+      <section class="search-results-view-section" id="searchResultsViewSection">
+        <section class="view seach-results-view" id="searchResultsView">
+          <div class="header search-results-view-header" id="searchResultsViewHeader" >
+            <h1 class="search-results-title"></h1>Search Results</h1>
+            <!-- <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/> -->
+          </div>
+          <div class="content search-results-content" id="searchResultsContent">
+            <p role="alert" class="no-results-found-alert" id="noResultsFound">Sorry, no recipes match your search. Please try using a different keyword!</p>
+          </div>
+        </section>
+      </section>
+      <section class="single-recipe-view-section" id="singleRecipeViewSection">
+        <section class="view single-recipe-view" id="searchResultsView">
+          <div class="header single-recipe-view-header" id="searchResultsViewHeader" >
+            <h1 class="single-recipe-title"></h1></h1>
+            <!-- <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/> -->
+          </div>
+          <div class="content single-recipe-content" id="singleRecipeContent">
+          </div>
+        </section>
+      </section>
+    </main>
   </body>
-  <!-- Do not include the scripts.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
 </html>
+
+
+<!-- REFERENCE HTML -->
+<!-- <button type="button" size="44" class="rui__sc-1n2ow0n-0 kGUYVV styles__StyledSaveButton-sc-7tlew3-0 
+bwNJPm save-button" data-testid="save-button" aria-label="Click to save listing for 12 Church St">
+<svg viewBox="0 0 24 24" data-testid="icon-heart" aria-hidden="true" focusable="false" style="display: inline-block; 
+width: 1em; height: 1em; font-size: 32px; color: inherit; fill: currentcolor;"><path d="M16.414 3c-1.562 
+0-3.242.632-4.414 1.974a5.882 5.882 0 00-4.336-1.935c-1.445 0-2.851.553-3.867 1.54C2.977 5.329 2 6.711 2 
+8.96c0 6.434 8.945 11.407 9.336 11.644l.703.395.703-.474C13.72 19.934 22 14.408 22 8.566 22 4.934 19.187 
+3 16.414 3zm0 1.421c2.11 0 4.18 1.421 4.18 4.145 0 5.25-8.594 10.776-8.594 10.776S3.406 14.605 3.406 
+8.961c0-2.961 2.149-4.5 4.258-4.5 1.953 0 3.867 1.223 4.336 3.71.469-2.526 2.46-3.75 4.414-3.75z"></path>
+</svg></button> -->
