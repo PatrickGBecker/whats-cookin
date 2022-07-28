@@ -55,11 +55,11 @@ Promise.all([
     recipeData = data[2];
     
     getUser(userData);
+    displayHomeView();
     }
 );
 
 // Event Listeners:
-window.addEventListener('load', displayHomeView)
 viewHomeButton.addEventListener('click', displayHomeView);
 viewAllRecipesButton.addEventListener('click', displayAllRecipesView);
 viewFavoritesButton.addEventListener('click', displayFavoritesView);
@@ -163,24 +163,62 @@ function displayDessertRecipes() {
 }
 
 // Functionality
-// function getUser(usersData) {
-//   getRecipes(usersData);
+function getUser(usersData) {
+  const randomIndex = getRandomIndex(usersData);
+  const randomUserData = usersData[randomIndex];
+  getRecipes();
+  user = new User(randomUserData, recipeRepository);
+};
+
+function getRecipes() {
+  recipeRepository = new RecipeRepository(recipeData);
+  getIngredients();
+};
+
+function getIngredients() {
+  recipeRepository.getRecipesInfo(ingredientsData);
+};
+
+const getRandomIndex = (array) => {
+  return Math.floor(Math.random() * array.length);
+};
+
+//POST REQUEST
+// //Still Need: query selectors and event listeners 
+// function updatePantryIngredients(event) { //user requests to update their pantry ingredients
+//   event.preventDefault(); // 
+
+//   const userID = 'user input'; // connect to a querySelector & event listener
+//   const ingredientID = 'user input'; // connect to a querySelector & event listener
+//   const numOfItemsModified = 'user input'; //connect to a querySelector & event listener
+
+//   const updatedIngredients = {
+//     method:'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ userID, ingredientID, numOfItemsModified })
+//   }
+
+//   fetch(`http://localhost:3001/api/v1/users`, updatedIngredients)
+//     .then(response => response.json())
+//     .then(data => console.log(data)) // can be deleted 
+//     .then(() => fetch(`http://localhost:3001/api/v1/users`))
+//       .then(response => response.json())
+//       .then(data => console.log(data))
+//     .catch(error => console.log(`Looks like we ran into an issue!`, error))
 // };
 
-// function getRecipes(usersData) {
-//   recipeRepository = new RecipeRepository(recipeData);
-//   getIngredients(usersData);
-// };
+//Do we still need this function?
+function displayRecipe(event) {
+  const card = event.target.closest('article');
 
-// function getIngredients(usersData) {
-//     recipeRepository.getRecipesInfo(ingredientsData);
-//     const userData = getRandomUser(usersData);
-//     user = new User(userData, recipeRepository);
-// };
-
-// function getRandomUser(array) {
-//   return Math.floor(Math.random() * array.length);
-// };
+  if (card.classList.contains('singleRecipeViewContainer')) {
+    hideElements([mainPageView, allRecipesView, favoritesView]);
+    showElements([singleRecipeView]);
+    createRecipeCard(card.id);
+  }
+};
 
 // function createRecipeCard(container, recipes) {
 //   container.innerHTML = '';
