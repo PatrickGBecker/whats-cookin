@@ -12,7 +12,7 @@ import User from './classes/User';
 // Query Selectors for buttons:
 let allRecipesTabButton = document.querySelector('.nav-tabs-all-recipes');
 let favoritesTabButton = document.querySelector('.nav-tabs-favorites');
-let searchButton = document.querySelector('.search-bar-search-input');
+let searchButton = document.querySelector('.se   arch-bar-search-input');
 let recipeTagButton = document.querySelector('.tag-label-button'); // May need to differeniate between buttons
 let addToFavoritesButton = document.querySelector('.recipe-button-favorite-button'); // May need a button for removing
 let removeFromFavoritesButton = document.getElementById('removeFromFavoritesButton')
@@ -44,14 +44,14 @@ let allSections = document.querySelectorAll('section');
 
 
 // Global Variables:
-let recipeData;
-let ingredientsData;
-let userData;
-let tags = [];
-let recipeRepository;
-let recipes;
 let ingredients;
+let ingredientsData;
+let recipes;
+let recipeData;
+let recipeRepository;
+let tags = [];
 let user;
+let userData;
 
 // Event Listeners:
 
@@ -63,11 +63,12 @@ Promise.all([
   .then(data => {
     console.log(data)
     userData = data[0];
-    recipeData = data[1];
-    ingredientsData = data[2];
-
+    ingredientsData = data[1];
+    recipeData = data[2];
+    
     getUser(userData);
-})
+    }
+);
 
 // console.log(displayFavoritesView());
 allRecipesTabButton.addEventListener('click', displayAllRecipes);
@@ -95,48 +96,49 @@ function removeStyling(elements, className) {
 };
 
 function getUser(usersData) {
-  getRecipes(usersData);
+  const randomIndex = getRandomIndex(usersData);
+  const randomUserData = usersData[randomIndex];
+  getRecipes();
+  user = new User(randomUserData, recipeRepository);
 };
 
-function getRecipes(usersData) {
+function getRecipes() {
   recipeRepository = new RecipeRepository(recipeData);
-  getIngredients(usersData);
+  getIngredients();
 };
 
-function getIngredients(usersData) {
-    recipeRepository.getRecipesInfo(ingredientsData); //getRecipeIngredientsData()
-    const userData = getRandomUser(usersData);
-    user = new User(userData, recipeRepository);
+function getIngredients() {
+  recipeRepository.getRecipesInfo(ingredientsData);
 };
 
-function getRandomUser(array) {
+const getRandomIndex = (array) => {
   return Math.floor(Math.random() * array.length);
 };
 
-function updatePantryIngredients(event) { //user requests to update their ingredients
-  event.preventDefault(); // 
-  
-  //We can group these 3 data points together or separately
-  const userID = 'user input'; // connect to a querySelector & event listener
-  const ingredientID = 'user input'; // connect to a querySelector & event listener
-  const numOfItemsModified = 'user input'; //connect to a querySelector & event listener
+// //Still Need: query selectors and event listeners 
+// function updatePantryIngredients(event) { //user requests to update their pantry ingredients
+//   event.preventDefault(); // 
+ 
+//   const userID = 'user input'; // connect to a querySelector & event listener
+//   const ingredientID = 'user input'; // connect to a querySelector & event listener
+//   const numOfItemsModified = 'user input'; //connect to a querySelector & event listener
 
-  const updatedIngredients = {
-    method:'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ userID, ingredientID, numOfItemsModified })
-  }
+//   const updatedIngredients = {
+//     method:'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ userID, ingredientID, numOfItemsModified })
+//   }
 
-  fetch(`http://localhost:3001/api/v1/users`, updatedIngredients)
-    .then(response => response.json())
-    .then(data => console.log(data)) // can be deleted 
-    .then(() => fetch(`http://localhost:3001/api/v1/users`))
-      .then(response => response.json())
-      .then(data => console.log(data))
-    .catch(error => console.log(`Looks like we ran into an issue!`, error))
-};
+//   fetch(`http://localhost:3001/api/v1/users`, updatedIngredients)
+//     .then(response => response.json())
+//     .then(data => console.log(data)) // can be deleted 
+//     .then(() => fetch(`http://localhost:3001/api/v1/users`))
+//       .then(response => response.json())
+//       .then(data => console.log(data))
+//     .catch(error => console.log(`Looks like we ran into an issue!`, error))
+// };
 
 function createRecipeCard(container, recipes) {
   container.innerHTML = '';
