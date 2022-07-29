@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>🥘 What's Cookin?! 🥘</title>
+    <title>What's Cookin?!</title>
   </head>
   <body>
     <main> 
@@ -24,34 +24,28 @@
       </nav>
       <section class="home-view-section" id="homeViewSection">
         <section class="view home-view" id="homeView">
-          <div class="header home-view-header" id="homeViewHeader" >
+          <div class="header home-view-header" id="homeViewHeader">
             <h1 class="home-title">What's Cookin'?!</h1>
             <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/>
           </div>
         </section>
-        <section class="tag-buttons" id="tagButtonsSection">
-          <nav role="navigation" class="tag-buttons" id="tagLabelIcon">
-            <div class="first-row-tag-buttons">
-              <button type="button" class="tags snacks-button" value="snacks">snacks</button>
-              <button type="button" class="tags appetizers-button" value="appetizers">appetizers</button>
-              <button type="button" class="tags side-dishes-button" value="side dishes">side dishes</button>
-              <button type="button" class="tags soups-button" value="soups">soups</button>
-            </div>
-            <div class="second-row-tag-buttons">
-              <button type="button" class="tags salads-button" value="salads">salads</button>
-              <button type="button" class="tags breakfast-button" value="breakfast">breakfast</button>
-              <button type="button" class="tags lunch-button" value="lunch">lunch</button>
-              <button type="button" class="tags dinner-button" value="dinner">dinner</button>
-              <button type="button" class="tags dessert-button" value="dessert">dessert</button>
-            </div>
+        <section class="tag-buttons-section" id="tagButtonsSection">
+          <nav role="navigation" class="tag-buttons" id="tagButtons">
+            <button type="button" class="tags-home breakfast-button"  value="breakfast">breakfast</button>
+            <button type="button" class="tags-home dips-button" value="dips">dips</button>
+            <button type="button" class="tags-home appetizers-button" value="appetizers">appetizers</button>
+            <button type="button" class="tags-home sauces-button" value="sauces">sauces</button>
+            <button type="button" class="tags-home salads-button" value="salads">salads</button>
+            <button type="button" class="tags-home main-courses-button" value="main course">main courses</button>
+            <button type="button" class="tags-home side-dishes-button" value="side dishes">side dishes</button>
+            <button type="button" class="tags-home other-button" value="other">other</button>
           </nav>
         </section>
       </section>
       <section class="all-recipes-view-section" id="allRecipesViewSection">
         <section class="view all-recipes-view" id="allRecipesView">
-          <div class="header all-recipes-view-header" id="allRecipesViewHeader" >
+          <div class="header all-recipes-view-header" id="allRecipesViewHeader">
             <h1 class="all-recipes-title">All Recipes</h1>
-            <!-- <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/> -->
           </div>
           <div class="content all-recipes-view-content" id="allRecipesViewContent">  
           </div> 
@@ -59,9 +53,8 @@
       </section>
       <section class="favorites-view-section" id="favoritesViewSection">
         <section class="view favorites-view" id="favoritesView">
-          <div class="header favorites-view-header" id="favoritesViewHeader" >
+          <div class="header favorites-view-header" id="favoritesViewHeader">
             <h1 class="favorites-title">Your Favorite Recipes!</h1>
-            <!-- <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/> -->
           </div>
           <div class="content favorites-view-content" id="favoritesViewContent">
             <p role="alert" class="no-favorites-added-alert" id="noFavoritesAdded">No favorite recipes have been added yet. Check out the all recipes section!</p>
@@ -70,9 +63,8 @@
       </section>
       <section class="search-results-view-section" id="searchResultsViewSection">
         <section class="view seach-results-view" id="searchResultsView">
-          <div class="header search-results-view-header" id="searchResultsViewHeader" >
-            <h1 class="search-results-title"></h1>Search Results</h1>
-            <!-- <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/> -->
+          <div class="header search-results-view-header" id="searchResultsViewHeader">
+            <h1 class="search-results-title">Search Results</h1>
           </div>
           <div class="content search-results-content" id="searchResultsContent">
             <p role="alert" class="no-results-found-alert" id="noResultsFound">Sorry, no recipes match your search. Please try using a different keyword!</p>
@@ -80,13 +72,173 @@
         </section>
       </section>
       <section class="single-recipe-view-section" id="singleRecipeViewSection">
-        <section class="view single-recipe-view" id="searchResultsView">
-          <div class="header single-recipe-view-header" id="searchResultsViewHeader" >
-            <h1 class="single-recipe-title"></h1></h1>
-            <!-- <img class="cooking-utensils-image" src="https://static.vecteezy.com/system/resources/previews/002/035/402/original/hand-drawn-set-of-kitchen-utensils-on-a-chalkboard-free-vector.jpg" alt="A sketch of cooking utensils"/> -->
+        <section class="view single-recipe-view" id="singleRecipeView">
+          <div class="header single-recipe-view-header" id="singleRecipeViewHeader" >
+            <h1 class="single-recipe-title"></h1>
           </div>
           <div class="content single-recipe-content" id="singleRecipeContent">
           </div>
+          <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
+        </section>
+      </section>
+      <section class="breakfast-recipes-view-section" id="breakfastRecipesViewSection">
+        <section class="view breakfast-recipes-view" id="breakfastRecipesView">
+          <div class="header breakfast-recipes-view-header" id="breakfastRecipesViewHeader">
+            <h1 class="breakfast-recipes-title">Breakfast Recipes!</h1>
+          </div>
+          <div class="content breakfast-recipes-content" id="breakfastRecipesContent">
+          </div>
+          <section class="tag-buttons-section" id="tagButtonsSection">
+            <nav role="navigation" class="tag-buttons" id="tagButtons">
+              <button type="button" class="tags-recipes-page dips-button" value="dips">dips</button>
+              <button type="button" class="tags-recipes-page appetizers-button" value="appetizers">appetizers</button>
+              <button type="button" class="tags-recipes-page sauces-button" value="sauces">sauces</button>
+              <button type="button" class="tags-recipes-page salads-button" value="salads">salads</button>
+              <button type="button" class="tags-recipes-page main-courses-button" value="main course">main courses</button>
+              <button type="button" class="tags-recipes-page side-dishes-button" value="side dishes">side dishes</button>
+              <button type="button" class="tags-recipes-page other-recipes-button" value="other">other recipes</button>
+            </nav>
+          </section>
+        </section>
+      </section>
+      <section class="dips-recipes-view-section" id="dipsRecipesViewSection">
+        <section class="view dips-recipes-view" id="dipsRecipesView">
+          <div class="header dips-recipes-view-header" id="dipsRecipesViewHeader">
+            <h1 class="dips-recipes-title">Dip Recipes!</h1>
+          </div>
+          <div class="content dips-recipes-content" id="dipsRecipesContent">
+          </div>
+          <section class="tag-buttons-section" id="tagButtonsSection">
+            <nav role="navigation" class="tag-buttons" id="tagButtons">
+              <button type="button" class="tags-recipes-page breakfast-button"  value="breakfast">breakfast</button>
+              <button type="button" class="tags-recipes-page appetizers-button" value="appetizers">appetizers</button>
+              <button type="button" class="tags-recipes-page sauces-button" value="sauces">sauces</button>
+              <button type="button" class="tags-recipes-page salads-button" value="salads">salads</button>
+              <button type="button" class="tags-recipes-page main-courses-button" value="main course">main courses</button>
+              <button type="button" class="tags-recipes-page side-dishes-button" value="side dishes">side dishes</button>
+              <button type="button" class="tags-recipes-page other-recipes-button" value="other">other recipes</button>
+            </nav>
+          </section>
+        </section>
+      </section>
+      <section class="appetizers-recipes-view-section" id="appetizersRecipesViewSection">
+        <section class="view appetizers-recipes-view" id="appetizersRecipesView">
+          <div class="header appetizers-recipes-view-header" id="appetizersRecipesViewHeader">
+            <h1 class="appetizers-recipes-title">Appetizer Recipes!</h1>
+          </div>
+          <div class="content appetizers-recipes-content" id="appetizersRecipesContent">
+          </div>
+          <section class="tag-buttons-section" id="tagButtonsSection">
+            <nav role="navigation" class="tag-buttons" id="tagButtons">
+              <button type="button" class="tags-recipes-page breakfast-button"  value="breakfast">breakfast</button>
+              <button type="button" class="tags-recipes-page dips-button" value="dips">dips</button>
+              <button type="button" class="tags-recipes-page sauces-button" value="sauces">sauces</button>
+              <button type="button" class="tags-recipes-page salads-button" value="salads">salads</button>
+              <button type="button" class="tags-recipes-page main-courses-button" value="main course">main courses</button>
+              <button type="button" class="tags-recipes-page side-dishes-button" value="side dishes">side dishes</button>
+              <button type="button" class="tags-recipes-page other-recipes-button" value="other">other recipes</button>
+            </nav>
+          </section>
+        </section>
+      </section>
+      <section class="sauces-recipes-view-section" id="saucesRecipesViewSection">
+        <section class="view sauces-recipes-view" id="saucesRecipesView">
+          <div class="header sauces-recipes-view-header" id="saucesRecipesViewHeader">
+            <h1 class="sauces-recipes-title">Sauce Recipes!</h1>
+          </div>
+          <div class="content sauces-recipes-content" id="saucesRecipesContent">
+          </div>
+          <section class="tag-buttons-section" id="tagButtonsSection">
+            <nav role="navigation" class="tag-buttons" id="tagButtons">
+              <button type="button" class="tags-recipes-page breakfast-button"  value="breakfast">breakfast</button>
+              <button type="button" class="tags-recipes-page dips-button" value="dips">dips</button>
+              <button type="button" class="tags-recipes-page appetizers-button" value="appetizers">appetizers</button>
+              <button type="button" class="tags-recipes-page salads-button" value="salads">salads</button>
+              <button type="button" class="tags-recipes-page main-courses-button" value="main course">main courses</button>
+              <button type="button" class="tags-recipes-page side-dishes-button" value="side dishes">side dishes</button>
+              <button type="button" class="tags-recipes-page other-recipes-button" value="other">other recipes</button>
+            </nav>
+          </section>
+        </section>
+      </section>
+      <section class="salads-recipes-view-section" id="saladsRecipesViewSection">
+        <section class="view salads-recipes-view" id="saladsRecipesView">
+          <div class="header salads-recipes-view-header" id="saladsRecipesViewHeader">
+            <h1 class="salads-recipes-title">Salad Recipes!</h1>
+          </div>
+          <div class="content salads-recipes-content" id="saladsRecipesContent">
+          </div>
+          <section class="tag-buttons-section" id="tagButtonsSection">
+            <nav role="navigation" class="tag-buttons" id="tagButtons">
+              <button type="button" class="tags-recipes-page breakfast-button"  value="breakfast">breakfast</button>
+              <button type="button" class="tags-recipes-page dips-button" value="dips">dips</button>
+              <button type="button" class="tags-recipes-page appetizers-button" value="appetizers">appetizers</button>
+               <button type="button" class="tags-recipes-page sauces-button" value="sauces">sauces</button>
+              <button type="button" class="tags-recipes-page main-courses-button" value="main course">main courses</button>
+              <button type="button" class="tags-recipes-page side-dishes-button" value="side dishes">side dishes</button>
+              <button type="button" class="tags-recipes-page other-recipes-button" value="other">other recipes</button>
+            </nav>
+          </section>
+        </section>
+      </section>
+      <section class="main-course-recipes-view-section" id="mainCourseRecipesViewSection">
+        <section class="main-course-recipes-view" id="mainCourseRecipesView">
+          <div class="header main-course-recipes-view-header" id="mainCourseRecipesViewHeader">
+            <h1 class="main-course-recipes-title">Main Course Recipes!</h1>
+          </div>
+          <div class="content main-course-recipes-content" id="mainCourseRecipesContent">
+          </div>
+          <section class="tag-buttons-section" id="tagButtonsSection">
+            <nav role="navigation" class="tag-buttons" id="tagButtons">
+              <button type="button" class="tags-recipes-page breakfast-button"  value="breakfast">breakfast</button>
+              <button type="button" class="tags-recipes-page dips-button" value="dips">dips</button>
+              <button type="button" class="tags-recipes-page appetizers-button" value="appetizers">appetizers</button>
+               <button type="button" class="tags-recipes-page sauces-button" value="sauces">sauces</button>
+               <button type="button" class="tags-recipes-page salads-button" value="salads">salads</button>
+              <button type="button" class="tags-recipes-page side-dishes-button" value="side dishes">side dishes</button>
+              <button type="button" class="tags-recipes-page other-recipes-button" value="other">other recipes</button>
+            </nav>
+          </section>
+        </section>
+      </section>
+      <section class="side-dishes-recipes-view-section" id="sideDishesRecipesViewSection">
+        <section class="view side-dishes-recipes-view" id="sideDishesRecipesView">
+          <div class="header side-dishes-recipes-view-header" id="sideDishesRecipesViewHeader">
+            <h1 class="side-dishes-recipes-title">Side Dish Recipes!</h1>
+          </div>
+          <div class="content side-dishes-recipes-content" id="sideDishesRecipesContent">
+          </div>
+          <section class="tag-buttons-section" id="tagButtonsSection">
+            <nav role="navigation" class="tag-buttons" id="tagButtons">
+              <button type="button" class="tags-recipes-page breakfast-button"  value="breakfast">breakfast</button>
+              <button type="button" class="tags-recipes-page dips-button" value="dips">dips</button>
+              <button type="button" class="tags-recipes-page appetizers-button" value="appetizers">appetizers</button>
+               <button type="button" class="tags-recipes-page sauces-button" value="sauces">sauces</button>
+               <button type="button" class="tags-recipes-page salads-button" value="salads">salads</button>
+              <button type="button" class="tags-recipes-page main-courses-button" value="main course">main courses</button>
+              <button type="button" class="tags-recipes-page other-recipes-button" value="other">other recipes</button>
+            </nav>
+          </section>
+        </section>
+      </section>
+      <section class="other-recipes-view-section" id="otherRecipesViewSection">
+        <section class="view other-recipes-view" id="otherRecipesView">
+          <div class="header other-recipes-view-header" id="otherRecipesViewHeader">
+            <h1 class="other-recipes-title">Other Recipes!</h1>
+          </div>
+          <div class="content other-recipes-content" id="otherRecipesContent">
+          </div>
+          <section class="tag-buttons-section" id="tagButtonsSection">
+            <nav role="navigation" class="tag-buttons" id="tagButtons">
+              <button type="button" class="tags-recipes-page breakfast-button"  value="breakfast">breakfast</button>
+              <button type="button" class="tags-recipes-page dips-button" value="dips">dips</button>
+              <button type="button" class="tags-recipes-page appetizers-button" value="appetizers">appetizers</button>
+               <button type="button" class="tags-recipes-page sauces-button" value="sauces">sauces</button>
+               <button type="button" class="tags-recipes-page salads-button" value="salads">salads</button>
+              <button type="button" class="tags-recipes-page main-courses-button" value="main course">main courses</button>
+              <button type="button" class="tags-recipes-page side-dishes-button" value="side dishes">side dishes</button>
+            </nav>
+          </section>
         </section>
       </section>
     </main>
