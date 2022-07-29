@@ -35,6 +35,11 @@ h1 {
   font-weight: bold;
 }
 
+p {
+  text-align: center;
+  font-size: 2vh;
+}
+
 .hidden {
   display: none;
 }
@@ -64,16 +69,26 @@ h1 {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: #ffffffd9;
   width: 50vw;
   margin-top: 50px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .cooking-utensils-image {
   align-content: center;
   width: 25vw;
   padding-bottom: 25px;
+}
+
+.app-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #ffffffd9;
+  width: 75vw;
+  margin-bottom: 50px;
 }
 
 .home-tag-buttons {
