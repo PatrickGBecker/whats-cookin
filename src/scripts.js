@@ -28,6 +28,7 @@ let dessertButton = document.querySelector('.dessert-button');
 // Query Selectors for full page views:
 let homeView = document.querySelector('.home-view-section');
 let allRecipesView = document.querySelector('.all-recipes-view-section');
+let allRecipesContent = document.querySelector('.all-recipes-view-content')
 let favoritesView = document.querySelector('.favorites-view-section');
 let searchResultsView = document.querySelector('.search-results-view-section');
 let singleRecipeView = document.querySelector('.single-recipe-view-section');
@@ -46,7 +47,7 @@ let userData;
 Promise.all([
   getData(`http://localhost:3001/api/v1/users`),
   getData(`http://localhost:3001/api/v1/ingredients`),
-  getData(`	http://localhost:3001/api/v1/recipes`),
+  getData(`http://localhost:3001/api/v1/recipes`),
 ])
   .then(data => {
     console.log(data)
@@ -100,7 +101,8 @@ function displayHomeView() {
 function displayAllRecipesView() {
   hideElements([homeView, viewAllRecipesButton, favoritesView, searchResultsView, singleRecipeView]);
   showElements([allRecipesView, viewHomeButton, viewFavoritesButton]);
-}
+  createRecipeCard(allRecipesContent, recipeRepository);
+};
 
 function displayFavoritesView() {
   hideElements([homeView, allRecipesView, viewFavoritesButton, searchResultsView, singleRecipeView]);
@@ -115,6 +117,7 @@ function displaySearchResultsView() {
 function displaySingleRecipeView() {
   hideElements([homeView, allRecipesView, favoritesView, searchResultsView]);
   showElements([singleRecipeView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
+
 }
 
 function displaySnackRecipes() {
@@ -209,42 +212,45 @@ const getRandomIndex = (array) => {
 //     .catch(error => console.log(`Looks like we ran into an issue!`, error))
 // };
 
-//Do we still need this function?
-function displayRecipe(event) {
-  const card = event.target.closest('article');
+function createRecipeCard(content, recipeRepository) {
+  content.innerHTML = '';
 
-  if (card.classList.contains('singleRecipeViewContainer')) {
-    hideElements([mainPageView, allRecipesView, favoritesView]);
-    showElements([singleRecipeView]);
-    createRecipeCard(card.id);
+  recipeRepository.recipes.forEach(recipe => {
+    content.innerHTML +=
+      `<section role="button" class="all-recipes-view-content" id=${recipe.id}>
+          <img src="${recipe.image}" class="recipe-card-image" alt=${recipe.name}>
+          <p class="recipe-card-name">${recipe.name}</p>
+      </section>`;
+  });
+}
+
+function displayRecipe(event) {
+  const card = event.target.closest('section');
+
+  if (card.classList.contains('single-recipe-view-section')) {
+    createSingleRecipeCard(card.id);
   }
 };
 
-// function createRecipeCard(container, recipes) {
-//   container.innerHTML = '';
+function createSingleRecipeCard(recipeId) {
+const recipe = recipeRepository.recipes.find(recipe => {
+  recipe.id === parseInt(recipeId)
+});
+};
 
-//   recipeRepository.recipes.forEach(recipe => {
-//     container.innerHTML +=
-//       `<article tabindex="0" role="button" class="recipes-container-recipe-card" id=${recipe.id}>
-//           <img src="${recipe.image}" class="recipe-card-image" alt=${recipe.name}>
-//           <p class="recipe-card-name">${recipe.name}</p>
-//       </article>`;
-//   });
-// };
+function createRecipeInstructions(instructions) {
+    recipeInstructions.innerHTML = instructions.reduce((acc, instruction) => {
+      acc += `<li class="ingredient-list-item">${instruction}</li>`;
+      return acc;
+    }, '');
+ };
 
-// function createRecipeInstructions(instructions) {
-//     recipeInstructions.innerHTML = instructions.reduce((acc, instruction) => {
-//       acc += `<li class="ingredient-list-item">${instruction}</li>`;
-//       return acc;
-//     }, '');
-//  };
-
-// function createRecipeIngredients(ingredients) {
-//     recipeIngredients.innerHTML = ingredients.reduce((acc, ingredient) => {
-//       acc += `<li class="ingredient-list-item">${ingredient}</li>`;
-//       return acc;
-//     }, '');
-//   };
+function createRecipeIngredients(ingredients) {
+    recipeIngredients.innerHTML = ingredients.reduce((acc, ingredient) => {
+      acc += `<li class="ingredient-list-item">${ingredient}</li>`;
+      return acc;
+    }, '');
+  };
 
 // function removeAllRecipeCards() {
 //     const recipeCards = document.querySelectorAll('.recipes-container-recipe-card');
