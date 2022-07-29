@@ -78,36 +78,36 @@ h1 {
 
 .tag-buttons {
   display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
   position: relative;
 }
 
-.first-row-tag-buttons {
-  display: flex;
-  justify-content: space-evenly;
-  width: 75vw;
-}
-
-.second-row-tag-buttons {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100vw;
-}
-
-.tags {
+.tags-home {
   margin: 20px;
   padding: 20px;
   background-color: #E0E0E0;
   border: 2px solid #000000;
   border-radius: 50%;
+  font-size: 1.25em;
   height: 7.5em;
   width: 7.5em;
   overflow: hidden;
   position: relative;
 }
 
-.tags:hover {
-  background-color: #1E88E5;
+.tags-home:hover {
+  background-color: #0088ff;
+  color: #ffffff
+}
+
+.tags-recipes-page {
+  background-color: #E0E0E0;
+  border: 2px solid #000000;
+  border-radius: 50%;
+}
+
+.tags-recipes-page:hover {
+  background-color: #ff9500;
 }
