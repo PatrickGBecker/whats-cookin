@@ -76,7 +76,7 @@ h1 {
   padding-bottom: 25px;
 }
 
-.tag-buttons {
+.home-tag-buttons {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -91,6 +91,7 @@ h1 {
   border: 2px solid #000000;
   border-radius: 50%;
   font-size: 1.25em;
+  text-align: center;
   height: 7.5em;
   width: 7.5em;
   overflow: hidden;
@@ -102,10 +103,26 @@ h1 {
   color: #ffffff
 }
 
+.recipes-tag-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  position: fixed;
+}
+
 .tags-recipes-page {
+  margin: 20px;
+  padding: 20px;
   background-color: #E0E0E0;
   border: 2px solid #000000;
   border-radius: 50%;
+  text-align: center;
+  height: 5em;
+  width: 5em;
+  overflow: hidden;
+  position: relative;
 }
 
 .tags-recipes-page:hover {
