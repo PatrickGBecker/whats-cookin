@@ -7,7 +7,7 @@
     <title>What's Cookin?!</title>
   </head>
   <body>
-    <main> 
+    <main>
       <nav role="navigation"class="nav-bar-header">
         <div class="nav-bar-buttons">
           <button type="button" class="view-home-button" id="homeButton">Home</button>
@@ -47,8 +47,8 @@
           <div class="header all-recipes-view-header" id="allRecipesViewHeader">
             <h1 class="all-recipes-title">All Recipes</h1>
           </div>
-          <div class="content all-recipes-view-content" id="allRecipesViewContent">  
-          </div> 
+          <div class="content all-recipes-view-content" id="allRecipesViewContent">
+          </div>
         </section>
       </section>
       <section class="favorites-view-section" id="favoritesViewSection">
@@ -74,10 +74,21 @@
       <section class="single-recipe-view-section" id="singleRecipeViewSection">
         <section class="view single-recipe-view" id="singleRecipeView">
           <div class="header single-recipe-view-header" id="singleRecipeViewHeader" >
-            <h1 class="single-recipe-title"></h1>
+            <h1 class="single-recipe-title" id="recipeName">Recipe Name</h1>
           </div>
           <div class="content single-recipe-content" id="singleRecipeContent">
+            <aside class="recipe-ingredients" id="recipeIngredients">
+              <h2>Ingredients</h2>
+              <ul class="ingredient-list" id="recipeIngredientsList"></ul>
+              <p class="total-cost">Cost:<span id="recipeCost"></span></p>
+            </aside>
+            <img id="recipeImage" class="recipe-image" alt="image of meticulously prepared recipe"
           </div>
+          <div class="content single-recipe-instructions" id="recipeInstructions">
+            <h2>Instructions</h2>
+            <ol class="instructions-list" id="recipeInstructionsList"></ol>
+          </div>
+          <button type="button" class="add-to-favorites-button" id="addToFavoritesButton">Add To Favorites</button>
           <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
         </section>
       </section>
@@ -248,12 +259,12 @@
 
 
 <!-- REFERENCE HTML -->
-<!-- <button type="button" size="44" class="rui__sc-1n2ow0n-0 kGUYVV styles__StyledSaveButton-sc-7tlew3-0 
+<!-- <button type="button" size="44" class="rui__sc-1n2ow0n-0 kGUYVV styles__StyledSaveButton-sc-7tlew3-0
 bwNJPm save-button" data-testid="save-button" aria-label="Click to save listing for 12 Church St">
-<svg viewBox="0 0 24 24" data-testid="icon-heart" aria-hidden="true" focusable="false" style="display: inline-block; 
-width: 1em; height: 1em; font-size: 32px; color: inherit; fill: currentcolor;"><path d="M16.414 3c-1.562 
-0-3.242.632-4.414 1.974a5.882 5.882 0 00-4.336-1.935c-1.445 0-2.851.553-3.867 1.54C2.977 5.329 2 6.711 2 
-8.96c0 6.434 8.945 11.407 9.336 11.644l.703.395.703-.474C13.72 19.934 22 14.408 22 8.566 22 4.934 19.187 
-3 16.414 3zm0 1.421c2.11 0 4.18 1.421 4.18 4.145 0 5.25-8.594 10.776-8.594 10.776S3.406 14.605 3.406 
+<svg viewBox="0 0 24 24" data-testid="icon-heart" aria-hidden="true" focusable="false" style="display: inline-block;
+width: 1em; height: 1em; font-size: 32px; color: inherit; fill: currentcolor;"><path d="M16.414 3c-1.562
+0-3.242.632-4.414 1.974a5.882 5.882 0 00-4.336-1.935c-1.445 0-2.851.553-3.867 1.54C2.977 5.329 2 6.711 2
+8.96c0 6.434 8.945 11.407 9.336 11.644l.703.395.703-.474C13.72 19.934 22 14.408 22 8.566 22 4.934 19.187
+3 16.414 3zm0 1.421c2.11 0 4.18 1.421 4.18 4.145 0 5.25-8.594 10.776-8.594 10.776S3.406 14.605 3.406
 8.961c0-2.961 2.149-4.5 4.258-4.5 1.953 0 3.867 1.223 4.336 3.71.469-2.526 2.46-3.75 4.414-3.75z"></path>
 </svg></button> -->
