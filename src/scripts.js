@@ -17,17 +17,11 @@ const addRecipeToFavoritesButton = document.querySelector('.add-to-favorites-but
 const removeFromFavoritesButton = document.querySelector('.remove-from-favorites-button')
 const searchButton = document.querySelector('.search-submit-button');
 const searchInput = document.querySelector('.search-input');
-const breakfastButton = document.querySelector('.breakfast-button');
-const dipsButton = document.querySelector('.dips-button');
 const appetizersButton = document.querySelector('.appetizers-button');
-const saucesButton = document.querySelector('.sauces-button');
-const saladsButton = document.querySelector('.salads-button');
 const mainCoursesButton = document.querySelector('.main-courses-button');
 const sideDishesButton = document.querySelector('.side-dishes-button');
-const otherRecipesButton = document.querySelector('.other-recipes-button');
 const cookRecipeButton = document.getElementById('cookRecipeButton')
 const addIngredientsButton = document.getElementById('addRecipeToFavoritesButton')
-// const recipeCardButton = document.querySelector('.recipe-card-image')
 
 // Query Selectors for views:
 const homeView = document.querySelector('.home-view-section');
@@ -36,14 +30,10 @@ const favoritesView = document.querySelector('.favorites-view-section');
 const searchResultsView = document.querySelector('.search-results-view-section');
 const noResultsView = document.getElementById('noResultsFound');
 const singleRecipeView = document.querySelector('.single-recipe-view-section');
-const breakfastRecipesView = document.querySelector('.breakfast-recipes-view-section');
-const dipRecipesView = document.querySelector('.dips-recipes-view-section');
+// const breakfastRecipesView = document.querySelector('.breakfast-recipes-view-section');
 const appetizerRecipesView = document.querySelector('.appetizers-recipes-view-section');
-const sauceRecipesView = document.querySelector('.sauces-recipes-view-section');
-const saladRecipesView = document.querySelector('.salads-recipes-view-section');
 const mainCourseRecipesView = document.querySelector('.main-course-recipes-view-section');
 const sideDishRecipesView = document.querySelector('.side-dishes-recipes-view-section');
-const otherRecipesView = document.querySelector('.other-recipes-view-section');
 const allSections = document.querySelectorAll('section > section');
 // Query Selector for updating page content
 const allRecipesContent = document.querySelector('.all-recipes-view-content');
@@ -52,14 +42,9 @@ const noFavoritesAdded = document.getElementById('noFavoritesAdded')
 const searchResultsContent = document.querySelector('.search-results-content');
 const singleRecipeTitle = document.querySelector('.single-recipe-title');
 const singleRecipeContent = document.querySelector('.single-recipe-content');
-const breakfastRecipesContent = document.querySelector('.breakfast-recipes-content');
-const dipRecipesContent = document.querySelector('.dips-recipes-content');
 const appetizerRecipesContent = document.querySelector('.appetizers-recipes-content');
-const sauceRecipesContent = document.querySelector('.sauces-recipes-content');
-const saladRecipesContent = document.querySelector('.salads-recipes-content');
 const mainCourseRecipesContent = document.querySelector('.main-course-recipes-content');
 const sideDishRecipesContent = document.querySelector('.side-dishes-recipes-content');
-const otherRecipesContent = document.querySelector('.other-recipes-content');
 const recipeName = document.getElementById('recipeName');
 const recipeIngredients = document.getElementById('recipeIngredients');
 const recipeInstructions = document.getElementById('recipeInstructions');
@@ -71,7 +56,8 @@ let ingredientsData;
 let recipes;
 let recipeData;
 let recipeRepository;
-let tags = [];
+let tag;
+let taggedRecipes = [];
 let user;
 let userData;
 
@@ -116,24 +102,19 @@ viewHomeButton.addEventListener('click', displayHomeView);
 viewAllRecipesButton.addEventListener('click', displayAllRecipesView);
 viewFavoritesButton.addEventListener('click', displayFavoritesView);
 addRecipeToFavoritesButton.addEventListener('click', addRecipeToFavorites);
-removeFromFavoritesButton.addEventListener('click', removeRecipeFromFavorites)
-searchButton.addEventListener('click', displaySearchResultsView)
-breakfastButton.addEventListener('click', displayBreakfastRecipes)
-dipsButton.addEventListener('click', displayDipRecipes)
-appetizersButton.addEventListener('click', displayAppetizerRecipes)
-saucesButton.addEventListener('click', displaySauceRecipes)
-saladsButton.addEventListener('click', displaySaladRecipes)
-// mainCoursesButton.addEventListener('click', displayMainCourseRecipes)
-sideDishesButton.addEventListener('click', displaySideDishRecipes)
-// otherRecipesButton.addEventListener('click', displayOtherRecipes)
-allSections.forEach(section => section.addEventListener('click', displayRecipe))
+removeFromFavoritesButton.addEventListener('click', removeRecipeFromFavorites);
+searchButton.addEventListener('click', displaySearchResultsView);
+appetizersButton.addEventListener('click', getTag);
+mainCoursesButton.addEventListener('click', getTag);
+sideDishesButton.addEventListener('click', getTag);
+allSections.forEach(section => section.addEventListener('click', displayRecipe));
 allSections.forEach(section => {
   section.addEventListener('keyup', function(event) {
     if (event.keyCode === 13) {
       displayRecipe(event)
     }
   });
-})
+});
 
 // Helper Functions:
 function hideElements(elements) {
@@ -154,74 +135,52 @@ function showElements(elements) {
 
 // DOM Display
 function displayHomeView() {
-  hideElements([viewHomeButton, allRecipesView, favoritesView, searchResultsView, singleRecipeView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
+  hideElements([viewHomeButton, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([homeView, viewAllRecipesButton, viewFavoritesButton]);
 };
 
 function displayAllRecipesView() {
-  hideElements([homeView, viewAllRecipesButton, favoritesView, searchResultsView, singleRecipeView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
+  hideElements([homeView, viewAllRecipesButton, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([allRecipesView, viewHomeButton, viewFavoritesButton]);
   sortRecipesByName();
   createRecipeCard(allRecipesContent, recipeRepository.recipes);
 };
 
 function displayFavoritesView() {
-  hideElements([homeView, allRecipesView, viewFavoritesButton, searchResultsView, singleRecipeView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
+  hideElements([homeView, allRecipesView, viewFavoritesButton, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([favoritesView, viewHomeButton, viewAllRecipesButton]);
 
   checkFavoriteRecipes();
 };
 
 function displaySearchResultsView() {
-  hideElements([homeView, allRecipesView, favoritesView, singleRecipeView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
+  hideElements([homeView, allRecipesView, favoritesView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([searchResultsView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
 };
 
 function displaySingleRecipeView() {
-  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
+  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([singleRecipeView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
 
 };
 
-function displayBreakfastRecipes() {
-  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, dipRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
-  showElements([breakfastRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
-};
-
-function displayDipRecipes() {
-  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, breakfastRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
-  showElements([dipRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
-};
-
 function displayAppetizerRecipes() {
-  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, breakfastRecipesView, dipRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
+  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([appetizerRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
+  createRecipeCard(appetizerRecipesContent, taggedRecipes);
 };
 
-function displaySauceRecipes() {
-  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
-  showElements([sauceRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
+function displayMainCourseRecipes() {
+  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
+  showElements([mainCourseRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
+  createRecipeCard(mainCourseRecipesContent, taggedRecipes);
 };
-
-function displaySaladRecipes() {
-  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, sauceRecipesView, mainCourseRecipesView, sideDishRecipesView, otherRecipesView]);
-  showElements([saladRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
-};
-
-// function displayMainCourseRecipes() {
-//   hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, sideDishRecipesView, otherRecipesView]);
-//   showElements([mainCourseRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
-// };
 
 function displaySideDishRecipes() {
-  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, otherRecipesView]);
+  hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([sideDishRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
+  createRecipeCard(sideDishRecipesContent, taggedRecipes);
 };
-
-// function displayOtherRecipes() {
-//   hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, breakfastRecipesView, dipRecipesView, appetizerRecipesView, sauceRecipesView, saladRecipesView, mainCourseRecipesView, sideDishRecipesView]);
-//   showElements([otherRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
-// };
 
 // DOM Functionality
 function getUser(usersData) {
@@ -275,12 +234,12 @@ function createRecipeCard(content, recipes) {
 }
 
 function createSingleRecipeCard(recipeId) {
-const recipe = recipeRepository.recipes.find(recipe => recipe.id === parseInt(recipeId));
+  const recipe = recipeRepository.recipes.find(recipe => recipe.id === parseInt(recipeId));
 
-createRecipeInterpolation(recipe);
-createIngredientList(recipe);
-createInstructionsList(recipe);
-checkIfRecipeInFavorites(recipe);
+  createRecipeInterpolation(recipe);
+  createIngredientList(recipe);
+  createInstructionsList(recipe);
+  checkIfRecipeInFavorites(recipe);
 };
 
 function createRecipeInstructions(instructions) {
@@ -297,19 +256,19 @@ function createRecipeIngredients(ingredients) {
     }, '');
   };
 
-  function createIngredientList(recipe) {
-    const ingredientList = recipe.returnIngredientList();
-    createRecipeIngredients(ingredientList);
-  }
+function createIngredientList(recipe) {
+  const ingredientList = recipe.returnIngredientList();
+  createRecipeIngredients(ingredientList);
+}
 
-  function createInstructionsList(recipe) {
-    const instructionsList = recipe.returnInstructions();
-    createRecipeInstructions(instructionsList);
-  }
+function createInstructionsList(recipe) {
+  const instructionsList = recipe.returnInstructions();
+  createRecipeInstructions(instructionsList);
+}
 
-  function sortRecipesByName() {
-    recipeRepository.recipes.sort((a, b) => a.name - b.name);
-  }
+function sortRecipesByName() {
+  recipeRepository.recipes.sort((a, b) => a.name - b.name);
+}
 
 function removeAllRecipeCards() {
     const recipeCards = document.querySelectorAll('.recipes-container-recipe-card');
@@ -397,5 +356,15 @@ function searchInvocation(searchTerm) {
 
 function getTag(event) {
   const tagClicked = event.target.closest('button');
-  const tag = tagClicked.value;
-}
+  tag = tagClicked.value;
+  taggedRecipes = recipeRepository.filterByTag(tag);
+  console.log(tag)
+  
+  if (tag === "appetizer") {
+    displayAppetizerRecipes();
+  } else if (tag === "main course") {
+    displayMainCourseRecipes();
+  } else if (tag === "side dish") {
+    displaySideDishRecipes();
+  }
+};
