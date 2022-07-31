@@ -15,8 +15,7 @@ const viewAllRecipesButton = document.querySelector('.view-all-recipes');
 const viewFavoritesButton = document.querySelector('.view-favorites');
 const addRecipeToFavoritesButton = document.querySelector('.add-to-favorites-button');
 const removeFromFavoritesButton = document.querySelector('.remove-from-favorites-button')
-const searchButton = document.querySelector('.search-submit-button');
-const searchInput = document.querySelector('.search-input');
+let searchInput = document.getElementById('searchBarInput');
 const appetizersButton = document.querySelector('.appetizers-button');
 const mainCoursesButton = document.querySelector('.main-courses-button');
 const sideDishesButton = document.querySelector('.side-dishes-button');
@@ -53,6 +52,7 @@ const recipeCost = document.getElementById('recipeCost');
 // Global Variables:
 let ingredients;
 let ingredientsData;
+let filteredRecipes = [];
 let recipes;
 let recipeData;
 let recipeRepository;
@@ -103,10 +103,13 @@ viewAllRecipesButton.addEventListener('click', displayAllRecipesView);
 viewFavoritesButton.addEventListener('click', displayFavoritesView);
 addRecipeToFavoritesButton.addEventListener('click', addRecipeToFavorites);
 removeFromFavoritesButton.addEventListener('click', removeRecipeFromFavorites);
-searchButton.addEventListener('click', displaySearchResultsView);
 appetizersButton.addEventListener('click', getTag);
 mainCoursesButton.addEventListener('click', getTag);
 sideDishesButton.addEventListener('click', getTag);
+searchInput.addEventListener('keyup', (event) => {
+  console.log(event.target.value)
+  searchInitialization(event)
+  });
 allSections.forEach(section => section.addEventListener('click', displayRecipe));
 allSections.forEach(section => {
   section.addEventListener('keyup', function(event) {
@@ -156,6 +159,7 @@ function displayFavoritesView() {
 function displaySearchResultsView() {
   hideElements([homeView, allRecipesView, favoritesView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([searchResultsView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
+  
 };
 
 function displaySingleRecipeView() {
@@ -318,32 +322,47 @@ console.log('user favs :', user.favoriteRecipes);
 }
 
 function searchInitialization(event) {
-  const searchTerm = event.target.value.toLowerCase();
-  searchDeclaration(searchTerm);
+  searchInput = event.target.value.toLowerCase();
+  const key = event.key;
+  if (key === "Backspace" || key === "Delete") {
+    displayHomeView();
+    return false;
+  }
+  if (key === 'enter') {
+    event.preventDefault();
+    return;
+  }
+  searchDeclaration(searchInput);
 };
 
-function searchDeclaration(searchTerm) {
-  if (!searchInput.value && !recipeSearchResultsContainer.innerHTML) {
+function searchDeclaration(searchInput) {
+  //if no search term included
+  if (!searchInput && !searchResultsContent.innerHTML) {
     return;
 
-  } else if (searchInput.value) {
-    hideElements([noResultsSearch, mainPageView]);
-    showElements([recipeSearchResults, recipeSearchResultsContainer]);
+  //if search term is included
+  } else if (searchInput) {
+    // hideElements([noResultsView, mainPageView]);
+    // showElements([recipeSearchResults, searchResultsContent]);
 
-    removeStyling(singleRecipeView, 'single-recipe-view');
-    removeStyling(allRecipesSection, 'all-recipes');
+    // removeStyling(singleRecipeView, 'single-recipe-view');
+    // removeStyling(allRecipesSection, 'all-recipes');
 
-    searchInvocation(searchTerm);
-
+    searchInvocation(searchInput);
+    displaySearchResultsView();
+    createRecipeCard(searchResultsContent, filteredRecipes)
+  
+  //if no search found
   } else {
-    hideElements([recipeSearchResultsContainer]);
-    showElements([noResultsSearch, recipeSearchResults]);
+    hideElements([searchResultsContent]);
+    showElements([noResultsView]);
   }
 };
 
-function searchInvocation(searchTerm) {
-  let filteredRecipes = recipeRepository.filterByRecipeName(searchTerm);
-  let findRecipesByIngredient = recipeRepository.getRecipeIngredientsData(searchTerm);
+function searchInvocation(searchInput) {
+  filteredRecipes = recipeRepository.filterByRecipeName(searchInput);
+  let findRecipesByIngredient = recipeRepository.getRecipeIngredientsData(searchInput, searchInput);
+  console.log('recipes by ingredient', findRecipesByIngredient)
 
   findRecipesByIngredient.forEach(recipe => {
     if (!filteredRecipes.includes(recipe)) {
@@ -351,7 +370,7 @@ function searchInvocation(searchTerm) {
     }
   });
 
-  createRecipeCard(recipeSearchResultsContainer, filteredRecipes);
+  console.log('filtered recipes', filteredRecipes)
 };
 
 function getTag(event) {

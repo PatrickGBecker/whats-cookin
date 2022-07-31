@@ -24,7 +24,7 @@ class RecipeRepository {
   filterByRecipeName(recipeName) {
     const recipes = this.recipes;
     const filteredRecipesByName = recipes
-      .filter(recipe => recipe.name.includes(recipeName))
+      .filter(recipe => recipe.name.toLowerCase().includes(recipeName))
       .map(recipe => recipe);
     return filteredRecipesByName;
   }
@@ -33,12 +33,12 @@ class RecipeRepository {
       const recipes = this.recipes;
       const filteredRecipes = recipes
         .reduce((searchedRecipes, recipe) => {
-          if (recipe.name === searchInput) {
+          if (recipe.name.toLowerCase() === searchInput.toLowerCase()) {
             searchedRecipes.push(recipe);
           } else {
             const matchedIngredient = recipe.ingredients
             .find((ingredient) => {
-              return ingredient.name.includes(ingredientName);
+              return ingredient.name.toLowerCase().includes(ingredientName);
             });
             if(matchedIngredient) {
               searchedRecipes.push(recipe);
