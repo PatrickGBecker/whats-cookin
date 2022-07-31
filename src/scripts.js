@@ -15,7 +15,6 @@ const viewAllRecipesButton = document.querySelector('.view-all-recipes');
 const viewFavoritesButton = document.querySelector('.view-favorites');
 const addRecipeToFavoritesButton = document.querySelector('.add-to-favorites-button');
 const removeFromFavoritesButton = document.querySelector('.remove-from-favorites-button')
-const searchButton = document.querySelector('#submitSearchButton');
 let searchInput = document.getElementById('searchBarInput');
 const appetizersButton = document.querySelector('.appetizers-button');
 const mainCoursesButton = document.querySelector('.main-courses-button');
@@ -107,12 +106,10 @@ removeFromFavoritesButton.addEventListener('click', removeRecipeFromFavorites);
 appetizersButton.addEventListener('click', getTag);
 mainCoursesButton.addEventListener('click', getTag);
 sideDishesButton.addEventListener('click', getTag);
-searchButton.addEventListener('click', searchInitialization);
 searchInput.addEventListener('keyup', (event) => {
   console.log(event.target.value)
   searchInitialization(event)
   });
-
 allSections.forEach(section => section.addEventListener('click', displayRecipe));
 allSections.forEach(section => {
   section.addEventListener('keyup', function(event) {
@@ -121,8 +118,6 @@ allSections.forEach(section => {
     }
   });
 });
-
-// console.log('searchString', searchString)
 
 // Helper Functions:
 function hideElements(elements) {
@@ -164,7 +159,7 @@ function displayFavoritesView() {
 function displaySearchResultsView() {
   hideElements([homeView, allRecipesView, favoritesView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([searchResultsView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
-  createRecipeCard(searchResultsContent, filteredRecipes)
+  
 };
 
 function displaySingleRecipeView() {
@@ -328,10 +323,19 @@ console.log('user favs :', user.favoriteRecipes);
 
 function searchInitialization(event) {
   searchInput = event.target.value.toLowerCase();
+  const key = event.key;
+  if (key === "Backspace" || key === "Delete") {
+    displayHomeView();
+    return false;
+  }
+  if (key === 'enter') {
+    event.preventDefault();
+    return;
+  }
   searchDeclaration(searchInput);
 };
 
-function searchDeclaration() {
+function searchDeclaration(searchInput) {
   //if no search term included
   if (!searchInput && !searchResultsContent.innerHTML) {
     return;
@@ -346,6 +350,7 @@ function searchDeclaration() {
 
     searchInvocation(searchInput);
     displaySearchResultsView();
+    createRecipeCard(searchResultsContent, filteredRecipes)
   
   //if no search found
   } else {
@@ -354,7 +359,7 @@ function searchDeclaration() {
   }
 };
 
-function searchInvocation() {
+function searchInvocation(searchInput) {
   filteredRecipes = recipeRepository.filterByRecipeName(searchInput);
   let findRecipesByIngredient = recipeRepository.getRecipeIngredientsData(searchInput, searchInput);
   console.log('recipes by ingredient', findRecipesByIngredient)
