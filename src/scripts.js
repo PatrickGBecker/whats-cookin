@@ -7,6 +7,7 @@ import Ingredient from './classes/Ingredient'
 import RecipeRepository from './classes/RecipeRepository'
 import Recipe from './classes/Recipe'
 import User from './classes/User';
+import MicroModal from 'micromodal';
 
 
 // Query Selectors for buttons:
@@ -20,7 +21,8 @@ const appetizersButton = document.querySelector('.appetizers-button');
 const mainCoursesButton = document.querySelector('.main-courses-button');
 const sideDishesButton = document.querySelector('.side-dishes-button');
 const cookRecipeButton = document.getElementById('cookRecipeButton')
-const addIngredientsButton = document.getElementById('addRecipeToFavoritesButton')
+const addIngredientsButton = document.getElementById('addIngredientsButton')
+const confirmCookingButton = document.getElementById('confirmCookingButton')
 
 // Query Selectors for views:
 const homeView = document.querySelector('.home-view-section');
@@ -44,6 +46,8 @@ const singleRecipeContent = document.querySelector('.single-recipe-content');
 const appetizerRecipesContent = document.querySelector('.appetizers-recipes-content');
 const mainCourseRecipesContent = document.querySelector('.main-course-recipes-content');
 const sideDishRecipesContent = document.querySelector('.side-dishes-recipes-content');
+const pantryIngredientsContent = document.querySelectorAll('pantryIngredients');
+const ingredientsNeededContent = document.getElementById('ingredientsNeeded');
 const recipeName = document.getElementById('recipeName');
 const recipeIngredients = document.getElementById('recipeIngredients');
 const recipeInstructions = document.getElementById('recipeInstructions');
@@ -106,6 +110,7 @@ removeFromFavoritesButton.addEventListener('click', removeRecipeFromFavorites);
 appetizersButton.addEventListener('click', getTag);
 mainCoursesButton.addEventListener('click', getTag);
 sideDishesButton.addEventListener('click', getTag);
+cookRecipeButton.addEventListener('click', displayModal);
 searchInput.addEventListener('keyup', (event) => {
   console.log(event.target.value)
   searchInitialization(event)
@@ -216,6 +221,12 @@ function displayRecipe(event) {
   }
 };
 
+function findRecipeName() {
+  const recipeTitle = singleRecipeTitle.innerText;
+  const recipes = recipeRepository.findRecipesByName(recipeTitle.toLowerCase());
+  return recipes[0];
+}
+
 function createRecipeInterpolation(recipe) {
   recipeImage.alt = recipe.name;
   recipeImage.src = recipe.image;
@@ -244,6 +255,8 @@ function createSingleRecipeCard(recipeId) {
   createIngredientList(recipe);
   createInstructionsList(recipe);
   checkIfRecipeInFavorites(recipe);
+  const pantryIngredients = user.returnPantryIngredients();
+  createPantryIngredients(pantryIngredients);
 };
 
 function createRecipeInstructions(instructions) {
@@ -312,7 +325,6 @@ function checkFavoriteRecipes() {
   if (user.favoriteRecipes.length) {
     hideElements([noFavoritesAdded]);
     showElements([favoritesContent]);
-console.log('user favs :', user.favoriteRecipes);
     createRecipeCard(favoritesContent, user.favoriteRecipes);
   } else {
     hideElements([favoritesContent]);
@@ -378,7 +390,7 @@ function getTag(event) {
   tag = tagClicked.value;
   taggedRecipes = recipeRepository.filterByTag(tag);
   console.log(tag)
-  
+
   if (tag === "appetizer") {
     displayAppetizerRecipes();
   } else if (tag === "main course") {
@@ -387,3 +399,62 @@ function getTag(event) {
     displaySideDishRecipes();
   }
 };
+
+function createPantryIngredients(pantryIngredients) {
+  pantryIngredientsContent.innerHTML = pantryIngredients.reduce((pantryObj, pantryIngredients) => {
+    pantryObj += `<li class="ingredient-list-item">${pantryIngredients}</li>`;
+    return pantryObj;
+  }, '');
+}
+
+function createNeededIngredients(neededIngredients) {
+  ingredientsNeededContent.innerHTML = neededIngredients.reduce((neededObj, neededIngredient) => {
+    neededObj += `<li class="ingredient-list-item">${neededIngredient.quantityAmount} ${neededIngredient.name}</li>`;
+    return neededObj;
+  }, '');
+}
+
+function updateUserIngredients(ingredients) {
+  return Promise.all(
+    ingredients.map((ingredient) => {
+      modifyIngredient(user.id, ingredient.id, ingredient.amount);
+    })
+  )
+};
+
+function addIngredients() {
+  const currentRecipe = findRecipeName();
+  const neededIngredients = user.returnNeededIngredients(currentRecipe);
+
+  updateIngredients(neededIngredients)
+  .then(response => {
+    user.addIngredientAmount(neededIngredients);
+    const pantryIngredients = user.returnPantryIngredients();
+    createPantryIngredients(pantryIngredients);
+    MicroModal.close("modal-1");
+    MicroModal.show("modal-2");
+  })
+}
+
+function useIngredients() {
+  const currentRecipe = findRecipeName();
+
+  updateIngredients(currentRecipe.ingredients)
+  .then(response => {
+    user.subtractIngredientAmount(currentRecipe.ingredients);
+    const pantryIngredients = user.returnPantryIngredients();
+    createPantryIngredients(pantryIngredients);
+    MicroModal.close("modal-2");
+  })
+}
+
+function displayModal() {
+  const currentRecipe = findRecipeName();
+  if (user.checkPantry(currentRecipe)) {
+    MicroModal.show("modal-2")
+  } else {
+    const neededIngredients = user.returnNeededIngredients(currentRecipe);
+    createNeededIngredients(neededIngredients);
+    MicroModal.show("modal-1")
+  }
+}
