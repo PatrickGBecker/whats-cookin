@@ -72,11 +72,11 @@
             <h1 class="single-recipe-title" id="recipeName">Recipe Name</h1>
           </div>
           <div class="content single-recipe-content" id="singleRecipeContent">
-            <aside class="recipe-ingredients" id="recipeIngredients">
+            <section class="recipe-ingredients" id="recipeIngredients">
               <h2>Ingredients</h2>
               <ul class="ingredient-list" id="recipeIngredientsList"></ul>
               <p class="total-cost">Cost:<span id="recipeCost"></span></p>
-            </aside>
+            </section>
             <img id="recipeImage" class="recipe-image" alt="image of meticulously prepared recipe"
           </div>
           <div class="content single-recipe-instructions" id="recipeInstructions">
@@ -85,7 +85,11 @@
           </div>
           <button type="button" class="add-to-favorites-button" id="addToFavoritesButton">Add To Favorites</button>
           <button type="button" class="remove-from-favorites-button hidden" id="removeFromFavoritesButton">Remove From Favorites</button>
-          <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
+          <aside>
+            <h2>Your Pantry</h2>
+            <ul id="pantryIngredients" class="pantry-ingredients">Pantry List</ul>
+            <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
+          </aside>
         </section>
       </section>
       <section class="appetizers-recipes-view-section" id="appetizersRecipesViewSection">
@@ -133,6 +137,43 @@
         </section>
       </section>
     </main>
+    <div class="modal" id="modal-1" aria-hidden="true">
+      <div class="modal-overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="add-ingredients-to-pantry" >
+          <header class="modal-header">
+            <h2 class="modal-title" id="add-ingredients-to-pantry">Add to Pantry</h2>
+            <button class="modal-close" aria-label="Close modal" data-micromodal-close></button>
+          </header>
+          <main class="modal-content" id="modal-1-content">
+            <p>You still need these ingredients to cook this recipe:</p>
+            <ul id="ingredientsNeeded">Ingredient List</ul>
+            <p>Want to add these ingredients to your pantry?</p>
+          </main>
+          <footer class="modal-footer">
+            <button class="modal-button" id="addIngredientsButton" aria-label="Add missing ingredients to pantry and close dialog window">YES</button>
+            <button class="modal-button" data-micromodal-close aria-label="Close this dialog window">CANCEL</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="modal-2" aria-hidden="true">
+      <div class="modal-overlay" tabindex="-1" data-micromodal-close >
+        <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="cook-confirmation-modal" >
+          <header class="modal-header">
+            <h2 class="modal-title" id="cook-confirmation-modal">Cook this recipe</h2>
+            <button class="modal-close" aria-label="Close modal" data-micromodal-close></button>
+          </header>
+          <main class="modal-content" id="modal-1-content">
+            <p>You have enough ingredients to cook this recipe!</p>
+            <p>Click YES, to confirm and update your pantry.</p>
+          </main>
+          <footer class="modal-footer">
+           <button class="modal-button" id="confirmCookingButton" aria-label="Cook current recipe and remove ingredients used from pantry">YES</button>
+           <button class="modal-button" data-micromodal-close aria-label="Close this dialog window">CANCEL</button>
+         </footer>
+       </div>
+     </div>
+   </div>
   </body>
   <script src="bundle.js"></script>
 </html>

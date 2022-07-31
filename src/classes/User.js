@@ -60,20 +60,20 @@ class User {
   //   }, [])
   //   return match
   // }
-//first version
-  // returnPantryIngredients() {
-  //   let match = this.pantry.reduce((acc, pantryIngredient) => {
-  //     this.repository.recipes.find(recipe => {
-  //       recipe.ingredients.find(ingredient => {
-  //         if (pantryIngredient.ingredient === ingredient.id) {
-  //           acc.push(`${pantryIngredient.amount} ${ingredient.name}`)
-  //         }
-  //       })
-  //     })
-  //     return acc
-  //   }, [])
-  //   return match;
-  // }
+returnPantryIngredients() {
+    let matchingIngredient;
+
+    return this.pantry.reduce((acc, pantryIngredient) => {
+      this.repository.recipes.find(recipe => {
+        matchingIngredient =  recipe.ingredients.find(ingredient => pantryIngredient.ingredient === ingredient.id)
+
+        return matchingIngredient;
+      })
+
+      acc.push(`${pantryIngredient.amount} ${matchingIngredient.name}`)
+      return acc
+    }, [])
+  }
 
   addIngredientAmount(ingredients) {
     ingredients.forEach(ingredient => {
@@ -104,6 +104,40 @@ class User {
      this.pantry.push({ingredient: ingredient.id, amount: ingredient.amount});
    }
 
+   returnNeededIngredients(recipe) {
+   const result = recipe.ingredients.reduce((obj, recipeIngredient) => {
+     let match = this.pantry.find(pantryIngredient => recipeIngredient.id === pantryIngredient.ingredient)
+
+     if (match) {
+       obj.have.push(recipeIngredient)
+     } else {
+       obj.need.push(recipeIngredient)
+     }
+     return obj
+   },
+   {
+     have: [],
+     need: []
+   })
+
+   const needByAmount = result.have.filter(resultIngredient => {
+     let foundMatches = this.pantry.find(ingredient => ingredient.ingredient === resultIngredient.id)
+     return foundMatches.amount < resultIngredient.amount
+
+   }).map(recipeIngredient => {
+     const foundMatches = this.pantry.find(pantryIngredient => pantryIngredient.ingredient === recipeIngredient.id)
+
+     return {
+       id: recipeIngredient.id,
+       name: recipeIngredient.name,
+       amount: recipeIngredient.amount - foundMatches.amount
+     }
+   })
+
+   const totalNeed = result.need.concat(needByAmount)
+   return totalNeed
+ }
+ 
 };
 
 export default User;
