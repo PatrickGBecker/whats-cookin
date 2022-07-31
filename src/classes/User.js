@@ -40,8 +40,8 @@ class User {
     let match = 0;
     recipe.ingredients.forEach(recipeIngredient => {
       this.pantry.forEach(pantryIngredient => {
-        if (recipeIngredient.id === pantryIngredient.ingredient && pantryIngredient.amount >= recipeIngredient.amount) {
-          equal += 1;
+        if (recipeIngredient.id === pantryIngredient.ingredient && pantryIngredient.amount >= recipeIngredient.quantityAmount) {
+          match += 1;
       }
     })
   })
@@ -137,7 +137,7 @@ returnPantryIngredients() {
    const totalNeed = result.need.concat(needByAmount)
    return totalNeed
  }
- 
+
 };
 
 export default User;

@@ -386,23 +386,49 @@ function createPantryIngredients(pantryIngredients) {
   pantryIngredientsContent.innerHTML = pantryIngredients.reduce((pantryObj, pantryIngredients) => {
     pantryObj += `<li class="ingredient-list-item">${pantryIngredients}</li>`;
     return pantryObj;
-  }, "");
+  }, '');
 }
 
 function createNeededIngredients(neededIngredients) {
   ingredientsNeededContent.innerHTML = neededIngredients.reduce((neededObj, neededIngredient) => {
-    neededObj += `li class="ingredient-list-item">${neededIngredient.amount} ${neededIngredient.name}</li>`;
+    neededObj += `<li class="ingredient-list-item">${neededIngredient.quantityAmount} ${neededIngredient.name}</li>`;
     return neededObj;
-  }, "");
+  }, '');
 }
 
 function updateUserIngredients(ingredients) {
   return Promise.all(
     ingredients.map((ingredient) => {
-      modifyIngredients(user.id, ingredient.id, ingredient.amount);
+      modifyIngredient(user.id, ingredient.id, ingredient.amount);
     })
   )
 };
+
+function addIngredients() {
+  const currentRecipe = findRecipeName();
+  const neededIngredients = user.returnNeededIngredients(currentRecipe);
+
+  updateIngredients(neededIngredients)
+  .then(response => {
+    user.addIngredientAmount(neededIngredients);
+    const pantryIngredients = user.returnPantryIngredients();
+    createPantryIngredients(pantryIngredients);
+    MicroModal.close("modal-1");
+    MicroModal.show("modal-2");
+  })
+}
+
+function useIngredients() {
+  const currentRecipe = findRecipeName();
+
+  updateIngredients(currentRecipe.ingredients)
+  .then(response => {
+    user.subtractIngredientAmount(currentRecipe.ingredients);
+    const pantryIngredients = user.returnPantryIngredients();
+    createPantryIngredients(pantryIngredients);
+    MicroModal.close("modal-2");
+  })
+}
 
 function displayModal() {
   const currentRecipe = findRecipeName();
