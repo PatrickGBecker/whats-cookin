@@ -15,7 +15,7 @@ const viewAllRecipesButton = document.querySelector('.view-all-recipes');
 const viewFavoritesButton = document.querySelector('.view-favorites');
 const addRecipeToFavoritesButton = document.querySelector('.add-to-favorites-button');
 const removeFromFavoritesButton = document.querySelector('.remove-from-favorites-button')
-const searchButton = document.querySelector('.search-submit-button');
+// const searchButton = document.querySelector('.search-submit-button');
 const searchInput = document.querySelector('.search-input');
 const appetizersButton = document.querySelector('.appetizers-button');
 const mainCoursesButton = document.querySelector('.main-courses-button');
@@ -103,10 +103,15 @@ viewAllRecipesButton.addEventListener('click', displayAllRecipesView);
 viewFavoritesButton.addEventListener('click', displayFavoritesView);
 addRecipeToFavoritesButton.addEventListener('click', addRecipeToFavorites);
 removeFromFavoritesButton.addEventListener('click', removeRecipeFromFavorites);
-searchButton.addEventListener('click', displaySearchResultsView);
 appetizersButton.addEventListener('click', getTag);
 mainCoursesButton.addEventListener('click', getTag);
 sideDishesButton.addEventListener('click', getTag);
+// searchInput.addEventListener('click', searchInitialization);
+searchInput.addEventListener('keyup', function (event) {
+  if (event.keyCode === 13) {
+    searchInitialization(event)
+  }
+});
 allSections.forEach(section => section.addEventListener('click', displayRecipe));
 allSections.forEach(section => {
   section.addEventListener('keyup', function(event) {
@@ -318,26 +323,26 @@ console.log('user favs :', user.favoriteRecipes);
 }
 
 function searchInitialization(event) {
-  const searchTerm = event.target.value.toLowerCase();
-  searchDeclaration(searchTerm);
+  searchInput = event.target.value.toLowerCase();
+  searchDeclaration(searchInput);
 };
 
 function searchDeclaration(searchTerm) {
-  if (!searchInput.value && !recipeSearchResultsContainer.innerHTML) {
+  if (!searchTerm.value && !searchResultsContent.innerHTML) {
     return;
 
-  } else if (searchInput.value) {
-    hideElements([noResultsSearch, mainPageView]);
-    showElements([recipeSearchResults, recipeSearchResultsContainer]);
+  } else if (searchTerm.value) {
+    hideElements([noResultsView, mainPageView]);
+    showElements([recipeSearchResults, searchResultsContent]);
 
-    removeStyling(singleRecipeView, 'single-recipe-view');
-    removeStyling(allRecipesSection, 'all-recipes');
+    // removeStyling(singleRecipeView, 'single-recipe-view');
+    // removeStyling(allRecipesSection, 'all-recipes');
 
     searchInvocation(searchTerm);
 
   } else {
-    hideElements([recipeSearchResultsContainer]);
-    showElements([noResultsSearch, recipeSearchResults]);
+    hideElements([searchResultsContent]);
+    showElements([noResultsView, recipeSearchResults]);
   }
 };
 
@@ -351,7 +356,7 @@ function searchInvocation(searchTerm) {
     }
   });
 
-  createRecipeCard(recipeSearchResultsContainer, filteredRecipes);
+  createRecipeCard(searchResultsContent, filteredRecipes);
 };
 
 function getTag(event) {
