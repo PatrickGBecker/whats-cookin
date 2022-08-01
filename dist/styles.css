@@ -138,10 +138,16 @@ h1 {
   height: 100%;
 }
 
+li {
+  list-style: none;
+  padding: 0;
+}
+
 aside {
   display: flex;
   flex-direction: column;
 	background-color: rgba(255, 255, 255, 0.85);
+  left: -150px;
 	width: 150px;
   top: 8px;
   bottom: 24px;
@@ -153,8 +159,22 @@ aside {
   display: none;
 }
 
+.modal-button:hover {
+  background-color: #ff9500;
+}
+
 .modal.is-open {
   display: block;
+}
+
+.modal-container {
+  background-color: white;
+  padding: 30px;
+  width: 40vw;
+  height: 80vh;
+  border-radius: 4px;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .modal-overlay {
@@ -169,15 +189,6 @@ aside {
   justify-content: center;
 }
 
-.modal-container {
-  background-color: white;
-  padding: 30px;
-  max-width: 500px;
-  max-height: 100vh;
-  border-radius: 4px;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
 
 .modal-header {
   align-items: center;

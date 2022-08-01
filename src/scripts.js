@@ -95,7 +95,7 @@ function modifyIngredient(userId, ingredientsId, ingredientsModification) {
   })
     .then(response => response.json())
     .then(data => console.log('POST data: ', data))
-    .catch(error => console.log('POST error: ', `${response.statusText}: Looks like there was a problem!`, error))
+    .catch(error => console.log('POST error: ', `Looks like there was a problem!`, error))
 }
 
 
@@ -111,6 +111,8 @@ appetizersButton.addEventListener('click', getTag);
 mainCoursesButton.addEventListener('click', getTag);
 sideDishesButton.addEventListener('click', getTag);
 cookRecipeButton.addEventListener('click', displayModal);
+addIngredientsButton.addEventListener('click', addIngredients);
+confirmCookingButton.addEventListener('click', useIngredients);
 searchInput.addEventListener('keyup', (event) => {
   console.log(event.target.value)
   searchInitialization(event)
@@ -164,7 +166,7 @@ function displayFavoritesView() {
 function displaySearchResultsView() {
   hideElements([homeView, allRecipesView, favoritesView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([searchResultsView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
-  
+
 };
 
 function displaySingleRecipeView() {
@@ -363,7 +365,7 @@ function searchDeclaration(searchInput) {
     searchInvocation(searchInput);
     displaySearchResultsView();
     createRecipeCard(searchResultsContent, filteredRecipes)
-  
+
   //if no search found
   } else {
     hideElements([searchResultsContent]);
@@ -425,12 +427,14 @@ function updateUserIngredients(ingredients) {
 function addIngredients() {
   const currentRecipe = findRecipeName();
   const neededIngredients = user.returnNeededIngredients(currentRecipe);
-
-  updateIngredients(neededIngredients)
+console.log('needeIng: ', neededIngredients);
+console.log('currentRec: ', currentRecipe);
+  updateUserIngredients(neededIngredients)
   .then(response => {
     user.addIngredientAmount(neededIngredients);
     const pantryIngredients = user.returnPantryIngredients();
     createPantryIngredients(pantryIngredients);
+    console.log('pantryINg: ', pantryIngredients);
     MicroModal.close("modal-1");
     MicroModal.show("modal-2");
   })
@@ -439,7 +443,7 @@ function addIngredients() {
 function useIngredients() {
   const currentRecipe = findRecipeName();
 
-  updateIngredients(currentRecipe.ingredients)
+  updateUserIngredients(currentRecipe.ingredients)
   .then(response => {
     user.subtractIngredientAmount(currentRecipe.ingredients);
     const pantryIngredients = user.returnPantryIngredients();

@@ -47,19 +47,7 @@ class User {
   })
     return match === recipe.ingredients.length;
   }
-//2nd version
-  // returnPantryIngredients(recipe) {
-  //   const match = recipe.ingredients.reduce((acc, ingredient) => {
-  //     console.log('ingredient', ingredient);
-  //     this.pantry.forEach(pantryIngredient => {
-  //       if (pantryIngredient.ingredient === ingredient.id) {
-  //         acc.push(`${pantryIngredient.amount} ${ingredient.name}`)
-  //       }
-  //     })
-  //     return acc
-  //   }, [])
-  //   return match
-  // }
+
 returnPantryIngredients() {
     let matchingIngredient;
 
