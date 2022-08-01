@@ -31,7 +31,6 @@ const favoritesView = document.querySelector('.favorites-view-section');
 const searchResultsView = document.querySelector('.search-results-view-section');
 const noResultsView = document.getElementById('noResultsFound');
 const singleRecipeView = document.querySelector('.single-recipe-view-section');
-// const breakfastRecipesView = document.querySelector('.breakfast-recipes-view-section');
 const appetizerRecipesView = document.querySelector('.appetizers-recipes-view-section');
 const mainCourseRecipesView = document.querySelector('.main-course-recipes-view-section');
 const sideDishRecipesView = document.querySelector('.side-dishes-recipes-view-section');
@@ -46,11 +45,11 @@ const singleRecipeContent = document.querySelector('.single-recipe-content');
 const appetizerRecipesContent = document.querySelector('.appetizers-recipes-content');
 const mainCourseRecipesContent = document.querySelector('.main-course-recipes-content');
 const sideDishRecipesContent = document.querySelector('.side-dishes-recipes-content');
-const pantryIngredientsContent = document.querySelectorAll('pantryIngredients');
-const ingredientsNeededContent = document.getElementById('ingredientsNeeded');
+const pantryIngredientsContent = document.querySelectorAll('pantryIngredientItem'); 
+const ingredientsNeededContent = document.getElementById('ingredientNeeded');
 const recipeName = document.getElementById('recipeName');
-const recipeIngredients = document.getElementById('recipeIngredients');
-const recipeInstructions = document.getElementById('recipeInstructions');
+const recipeIngredients = document.getElementById('recipeIngredientsItem');
+const recipeInstructions = document.getElementById('recipeInstructionsItem');
 const recipeImage = document.getElementById('recipeImage');
 const recipeCost = document.getElementById('recipeCost');
 // Global Variables:
@@ -356,12 +355,6 @@ function searchDeclaration(searchInput) {
 
   //if search term is included
   } else if (searchInput) {
-    // hideElements([noResultsView, mainPageView]);
-    // showElements([recipeSearchResults, searchResultsContent]);
-
-    // removeStyling(singleRecipeView, 'single-recipe-view');
-    // removeStyling(allRecipesSection, 'all-recipes');
-
     searchInvocation(searchInput);
     displaySearchResultsView();
     createRecipeCard(searchResultsContent, filteredRecipes)
@@ -404,14 +397,14 @@ function getTag(event) {
 
 function createPantryIngredients(pantryIngredients) {
   pantryIngredientsContent.innerHTML = pantryIngredients.reduce((pantryObj, pantryIngredients) => {
-    pantryObj += `<li class="ingredient-list-item">${pantryIngredients}</li>`;
+    pantryObj += `<li class="pantry-ingredient-item" id="pantryIngredientItem">${pantryIngredients}</li>`;
     return pantryObj;
   }, '');
 }
 
 function createNeededIngredients(neededIngredients) {
   ingredientsNeededContent.innerHTML = neededIngredients.reduce((neededObj, neededIngredient) => {
-    neededObj += `<li class="ingredient-list-item">${neededIngredient.quantityAmount} ${neededIngredient.name}</li>`;
+    neededObj += `<li class="ingredient-needed" id="ingredientNeeded">${neededIngredient.quantityAmount} ${neededIngredient.name}</li>`;
     return neededObj;
   }, '');
 }
