@@ -35,23 +35,24 @@ const appetizerRecipesView = document.querySelector('.appetizers-recipes-view-se
 const mainCourseRecipesView = document.querySelector('.main-course-recipes-view-section');
 const sideDishRecipesView = document.querySelector('.side-dishes-recipes-view-section');
 const allSections = document.querySelectorAll('section > section');
+
 // Query Selector for updating page content
 const allRecipesContent = document.querySelector('.all-recipes-view-content');
 const favoritesContent = document.querySelector('.favorites-view-content');
 const noFavoritesAdded = document.getElementById('noFavoritesAdded')
 const searchResultsContent = document.querySelector('.search-results-content');
 const singleRecipeTitle = document.querySelector('.single-recipe-title');
-const singleRecipeContent = document.querySelector('.single-recipe-content');
 const appetizerRecipesContent = document.querySelector('.appetizers-recipes-content');
 const mainCourseRecipesContent = document.querySelector('.main-course-recipes-content');
 const sideDishRecipesContent = document.querySelector('.side-dishes-recipes-content');
-const pantryIngredientsContent = document.querySelectorAll('pantryIngredientItem'); 
+const pantryIngredientsContent = document.getElementById('pantryIngredients'); 
 const ingredientsNeededContent = document.getElementById('ingredientNeeded');
 const recipeName = document.getElementById('recipeName');
 const recipeIngredients = document.getElementById('recipeIngredientsItem');
 const recipeInstructions = document.getElementById('recipeInstructionsItem');
 const recipeImage = document.getElementById('recipeImage');
 const recipeCost = document.getElementById('recipeCost');
+
 // Global Variables:
 let ingredients;
 let ingredientsData;
@@ -134,14 +135,6 @@ function showElements(elements) {
   elements.forEach(element => element.classList.remove('hidden'));
 };
 
-// function addStyling(elements, className) {
-//   elements.classList.add(className)
-// };
-
-// function removeStyling(elements, className) {
-//   elements.classList.remove(className)
-// };
-
 // DOM Display
 function displayHomeView() {
   hideElements([viewHomeButton, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
@@ -177,18 +170,21 @@ function displaySingleRecipeView() {
 function displayAppetizerRecipes() {
   hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([appetizerRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
+
   createRecipeCard(appetizerRecipesContent, taggedRecipes);
 };
 
 function displayMainCourseRecipes() {
   hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([mainCourseRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
+
   createRecipeCard(mainCourseRecipesContent, taggedRecipes);
 };
 
 function displaySideDishRecipes() {
   hideElements([homeView, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
   showElements([sideDishRecipesView, viewHomeButton, viewAllRecipesButton, viewFavoritesButton]);
+
   createRecipeCard(sideDishRecipesContent, taggedRecipes);
 };
 
@@ -214,13 +210,6 @@ const getRandomIndex = (array) => {
 };
 
 
-function displayRecipe(event) {
-  const card = event.target.closest('article');
-  if (card.classList.contains('recipes-card-content')) {
-    displaySingleRecipeView()
-    createSingleRecipeCard(card.id);
-  }
-};
 
 function findRecipeName() {
   const recipeTitle = singleRecipeTitle.innerText;
@@ -232,22 +221,31 @@ function createRecipeInterpolation(recipe) {
   recipeImage.alt = recipe.name;
   recipeImage.src = recipe.image;
   recipeName.innerText = recipe.name
-  recipeCost.innerText = recipe.returnTotalCost();
+  recipeCost.innerText = ` $${recipe.returnTotalCost()}`;
   addRecipeToFavoritesButton.name = recipe.id;
   removeFromFavoritesButton.name = recipe.id;
 }
 
 function createRecipeCard(content, recipes) {
   content.innerHTML = '';
-
+  
   recipes.forEach(recipe => {
     content.innerHTML +=
-      `<article tabindex="0" role="button" class="recipes-card-content" id=${recipe.id}>
-          <img src="${recipe.image}" class="recipe-card-image" alt=${recipe.name}>
-          <h1 class="recipe-card-name" id="recipeName">${recipe.name}</h1>
-      </article>`;
+    `<article tabindex="0" role="button" class="recipes-card-content" id=${recipe.id}>
+      <img src="${recipe.image}" class="recipe-card-image" alt=${recipe.name}>
+      <h4 class="recipe-card-name" id="recipeName">${recipe.name}</h1>
+    </article>`;
   });
 }
+
+function displayRecipe(event) {
+  const card = event.target.closest('article');
+  console.log(document.querySelector('.recipes-card-content'))
+  if (card.classList.contains('recipes-card-content')) {
+    displaySingleRecipeView()
+    createSingleRecipeCard(card.id);
+  }
+};
 
 function createSingleRecipeCard(recipeId) {
   const recipe = recipeRepository.recipes.find(recipe => recipe.id === parseInt(recipeId));

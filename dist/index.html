@@ -70,33 +70,33 @@
           <div class="header single-recipe-view-header" id="singleRecipeViewHeader" >
             <h1 class="single-recipe-title" id="recipeName">Recipe Name</h1>
           </div>
-          <div class="content single-recipe-content" id="singleRecipeContent">
-            <section class="recipe-ingredients" id="recipeIngredients">
-              <h2>Ingredients</h2>
-              <ul class="ingredient-list">
-                <li class="ingredient-item" id="recipeIngredientsItem"></li>
+        <section class="content single-recipe-content" id="singleRecipeContent">
+          <div class="ingredient-container">
+            <aside>
+              <h2>Your Pantry</h2>
+              <ul id="pantryIngredients" class="pantry-ingredients">
+                <li class="pantry-ingredient-item" id="pantryIngredientItem"></li>
               </ul>
-              <p class="total-cost">Cost:<span id="recipeCost"></span></p>
+              <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
+            </aside>
+            <section class="recipe-ingredients" id="recipeIngredients">
+              <ul class="ingredient-list">
+                <h2>Ingredients</h2>
+                <li class="ingredient-item" id="recipeIngredientsItem"></li>
+                <p class="total-cost">Cost:<span id="recipeCost"></span></p>
+              </ul>
+              <img id="recipeImage" class="recipe-image" alt="image of meticulously prepared recipe">
             </section>
-            <img id="recipeImage" class="recipe-image" alt="image of meticulously prepared recipe"
           </div>
-          <div class="content single-recipe-instructions" id="recipeInstructions">
+          <section class="content single-recipe-instructions" id="recipeInstructions">
             <h2>Instructions</h2>
             <ol class="instructions-list">
               <li class="instruction-item" id="recipeInstructionsItem"></li>
             </ol>
           </div>
-          <button type="button" class="add-to-favorites-button" id="addToFavoritesButton">Add To Favorites</button>
-          <button type="button" class="remove-from-favorites-button hidden" id="removeFromFavoritesButton">Remove From Favorites</button>
-          <aside>
-            <h2>Your Pantry</h2>
-              <p>Your Pantry List</p>
-              <ul id="pantryIngredients" class="pantry-ingredients">
-                <li class="pantry-ingredient-item" id="pantryIngredientItem"></li>
-              </ul>
-            <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
-          </aside>
         </section>
+        <button type="button" class="favorite add-to-favorites-button" id="addToFavoritesButton">Add To Favorites</button>
+        <button type="button" class="favorite remove-from-favorites-button hidden" id="removeFromFavoritesButton">Remove From Favorites</button>
       </section>
       <section class="appetizers-recipes-view-section" id="appetizersRecipesViewSection">
         <section class="view appetizers-recipes-view" id="appetizersRecipesView">
