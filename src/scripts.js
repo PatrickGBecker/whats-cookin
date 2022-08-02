@@ -246,7 +246,7 @@ function createRecipeCard(content, recipes) {
     content.innerHTML +=
       `<article tabindex="0" role="button" class="recipes-card-content" id=${recipe.id}>
           <img src="${recipe.image}" class="recipe-card-image" alt=${recipe.name}>
-          <h1 class="recipe-card-name" id="recipeName">${recipe.name}</h1>
+          <h4 class="recipe-card-name" id="recipeName">${recipe.name}</h1>
       </article>`;
   });
 }
