@@ -72,30 +72,31 @@
           </div>
           <div class="content single-recipe-content" id="singleRecipeContent">
             <section class="recipe-ingredients" id="recipeIngredients">
-              <h2>Ingredients</h2>
-              <ul class="ingredient-list">
-                <li class="ingredient-item" id="recipeIngredientsItem"></li>
-              </ul>
-              <p class="total-cost">Cost:<span id="recipeCost"></span></p>
+              <div class="ingredient-container">
+                <aside>
+                  <h2>Your Pantry</h2>
+                    <ul id="pantryIngredients" class="pantry-ingredients">
+                      <li class="pantry-ingredient-item" id="pantryIngredientItem"></li>
+                    </ul>
+                  <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
+                </aside>
+                <ul class="ingredient-list">
+                  <h2>Ingredients</h2>
+                  <li class="ingredient-item" id="recipeIngredientsItem"></li>
+                  <p class="total-cost">Cost:<span id="recipeCost"></span></p>
+                </ul>
+                <img id="recipeImage" class="recipe-image" alt="image of meticulously prepared recipe">
+              </div>
             </section>
-            <img id="recipeImage" class="recipe-image" alt="image of meticulously prepared recipe"
           </div>
           <div class="content single-recipe-instructions" id="recipeInstructions">
-            <h2>Instructions</h2>
             <ol class="instructions-list">
+              <h2>Instructions</h2>
               <li class="instruction-item" id="recipeInstructionsItem"></li>
             </ol>
           </div>
           <button type="button" class="add-to-favorites-button" id="addToFavoritesButton">Add To Favorites</button>
           <button type="button" class="remove-from-favorites-button hidden" id="removeFromFavoritesButton">Remove From Favorites</button>
-          <aside>
-            <h2>Your Pantry</h2>
-              <p>Your Pantry List</p>
-              <ul id="pantryIngredients" class="pantry-ingredients">
-                <li class="pantry-ingredient-item" id="pantryIngredientItem"></li>
-              </ul>
-            <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
-          </aside>
         </section>
       </section>
       <section class="appetizers-recipes-view-section" id="appetizersRecipesViewSection">
@@ -146,17 +147,17 @@
     <div class="modal" id="modal-1" aria-hidden="true">
       <div class="modal-overlay" tabindex="-1" data-micromodal-close>
         <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="add-ingredients-to-pantry" >
-          <header class="modal-header">
-            <h2 class="modal-title" id="add-ingredients-to-pantry">Add to Pantry</h2>
-            <button class="modal-close" aria-label="Close modal" data-micromodal-close></button>
-          </header>
-          <main class="modal-content" id="modal-1-content">
+          <section class="modal-content" id="modal-1-content">
+            <header class="modal-header">
+              <h2 class="modal-title" id="add-ingredients-to-pantry">Add to Pantry</h2>
+              <button class="modal-close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
             <p>You still need these ingredients to cook this recipe:</p>
             <ul class="ingredients-needed">
               <li class="ingredient-needed" id="ingredientNeeded"></li>
             </ul>
             <p>Want to add these ingredients to your pantry?</p>
-          </main>
+          </section>
           <footer class="modal-footer">
             <button class="modal-button" id="addIngredientsButton" aria-label="Add missing ingredients to pantry and close dialog window">YES</button>
             <button class="modal-button" data-micromodal-close aria-label="Close this dialog window">CANCEL</button>
@@ -171,10 +172,10 @@
             <h2 class="modal-title" id="cook-confirmation-modal">Cook this recipe</h2>
             <button class="modal-close" aria-label="Close modal" data-micromodal-close></button>
           </header>
-          <main class="modal-content" id="modal-1-content">
+          <section class="modal-content" id="modal-1-content">
             <p>You have enough ingredients to cook this recipe!</p>
             <p>Click YES, to confirm and update your pantry.</p>
-          </main>
+          </section>
           <footer class="modal-footer">
            <button class="modal-button" id="confirmCookingButton" aria-label="Cook current recipe and remove ingredients used from pantry">YES</button>
            <button class="modal-button" data-micromodal-close aria-label="Close this dialog window">CANCEL</button>
@@ -186,14 +187,3 @@
   <script src="bundle.js"></script>
 </html>
 
-
-<!-- REFERENCE HTML -->
-<!-- <button type="button" size="44" class="rui__sc-1n2ow0n-0 kGUYVV styles__StyledSaveButton-sc-7tlew3-0
-bwNJPm save-button" data-testid="save-button" aria-label="Click to save listing for 12 Church St">
-<svg viewBox="0 0 24 24" data-testid="icon-heart" aria-hidden="true" focusable="false" style="display: inline-block;
-width: 1em; height: 1em; font-size: 32px; color: inherit; fill: currentcolor;"><path d="M16.414 3c-1.562
-0-3.242.632-4.414 1.974a5.882 5.882 0 00-4.336-1.935c-1.445 0-2.851.553-3.867 1.54C2.977 5.329 2 6.711 2
-8.96c0 6.434 8.945 11.407 9.336 11.644l.703.395.703-.474C13.72 19.934 22 14.408 22 8.566 22 4.934 19.187
-3 16.414 3zm0 1.421c2.11 0 4.18 1.421 4.18 4.145 0 5.25-8.594 10.776-8.594 10.776S3.406 14.605 3.406
-8.961c0-2.961 2.149-4.5 4.258-4.5 1.953 0 3.867 1.223 4.336 3.71.469-2.526 2.46-3.75 4.414-3.75z"></path>
-</svg></button> -->
