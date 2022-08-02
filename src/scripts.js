@@ -23,6 +23,7 @@ const sideDishesButton = document.querySelector('.side-dishes-button');
 const cookRecipeButton = document.getElementById('cookRecipeButton')
 const addIngredientsButton = document.getElementById('addIngredientsButton')
 const confirmCookingButton = document.getElementById('confirmCookingButton')
+const confirmErrorReadButton = document.getElementById('confirmErrorReadButton')
 
 // Query Selectors for views:
 const homeView = document.querySelector('.home-view-section');
@@ -47,11 +48,13 @@ const mainCourseRecipesContent = document.querySelector('.main-course-recipes-co
 const sideDishRecipesContent = document.querySelector('.side-dishes-recipes-content');
 const pantryIngredientsContent = document.getElementById('pantryIngredients');
 const ingredientsNeededContent = document.getElementById('ingredientNeeded');
+const errorMessageContent = document.getElementById('error-message-modal')
 const recipeName = document.getElementById('recipeName');
 const recipeIngredients = document.getElementById('recipeIngredientsItem');
 const recipeInstructions = document.getElementById('recipeInstructionsItem');
 const recipeImage = document.getElementById('recipeImage');
 const recipeCost = document.getElementById('recipeCost');
+const modal = document.querySelector('.modal')
 // Global Variables:
 let ingredients;
 let ingredientsData;
@@ -91,15 +94,36 @@ function modifyIngredient(userId, ingredientsId, ingredientsModification) {
       'Content-Type': 'application/json'
     }
   })
+    .then(checkStatus)
     .then(response => response.json())
     .then(data => data)
     .then( () => fetch(`http://localhost:3001/api/v1/users`))
-    .then(response => response.json())
-    .then(data => data)
-    .catch(error => console.log(`${response.statusText}: Looks like there was a problem!`, error))
+      .then(response => response.json())
+      .then(data => data)
+    .catch(error => console.log(`Looks like there was a problem!`, error))
 }
 
+function checkStatus(response) {
+  if (response.ok) {
+    return Promise.resolve(response);
+  } else {
+    return Promise.reject(new Error(generateErrorMessage(response)));
+  }
+}
 
+function generateErrorMessage(response) {
+  errorMessageContent.innerHTML = '';
+  
+  errorMessageContent.innerHTML +=
+  `<h2 class="modal-title" id="error-message-modal">${response.statusText}: Oops! Looks like there was an error!</h2>`;
+  MicroModal.show("modal-3")
+}
+
+function closeError() {
+  MicroModal.close("modal-3");
+  MicroModal.close("modal-2");
+  displayHomeView();
+}
 // Event Listeners:
 // singleRecipeContent.addEventListener('click', () => {
   // displayRecipe(event) });
@@ -114,6 +138,7 @@ sideDishesButton.addEventListener('click', getTag);
 cookRecipeButton.addEventListener('click', displayModal);
 addIngredientsButton.addEventListener('click', addIngredients);
 confirmCookingButton.addEventListener('click', useIngredients);
+confirmErrorReadButton.addEventListener('click', closeError)
 searchInput.addEventListener('keyup', (event) => {
   console.log(event.target.value)
   searchInitialization(event)
@@ -146,7 +171,7 @@ function showElements(elements) {
 
 // DOM Display
 function displayHomeView() {
-  hideElements([viewHomeButton, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
+  hideElements([viewHomeButton, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView, modal]);
   showElements([homeView, viewAllRecipesButton, viewFavoritesButton]);
 };
 
@@ -343,10 +368,7 @@ function searchInitialization(event) {
     displayHomeView();
     return false;
   }
-  if (key === 'enter') {
-    event.preventDefault();
-    return;
-  }
+
   searchDeclaration(searchInput);
 };
 
@@ -406,7 +428,8 @@ function createPantryIngredients(pantryIngredients) {
 
 function createNeededIngredients(neededIngredients) {
   ingredientsNeededContent.innerHTML = neededIngredients.reduce((neededObj, neededIngredient) => {
-    neededObj += `<li class="ingredient-needed" id="ingredientNeeded">${neededIngredient.quantityAmount} ${neededIngredient.name}</li>`;
+    const quantity = neededIngredient.quantityAmount || neededIngredient.amount;
+    neededObj += `<li class="ingredient-needed" id="ingredientNeeded">${quantity} ${neededIngredient.name}</li>`;
     return neededObj;
   }, '');
 }
@@ -414,9 +437,9 @@ function createNeededIngredients(neededIngredients) {
 function updateUserIngredients(ingredients) {
   return Promise.all(
     ingredients.map((ingredient) => {
-      console.log('ingAmount: ', ingredient.quantityAmount)
-      modifyIngredient(user.id, ingredient.id, ingredient.quantityAmount);
-
+      const quantity = neededIngredient.quantityAmount || neededIngredient.amount;
+      modifyIngredient(user.id, ingredient.id, quantity);
+      console.log('after modifyIngredient', ingredient.quantityAmount)
     })
   )
 };
@@ -424,8 +447,6 @@ function updateUserIngredients(ingredients) {
 function addIngredients() {
   const currentRecipe = findRecipeName();
   const neededIngredients = user.returnNeededIngredients(currentRecipe);
-console.log('needeIng: ', neededIngredients);
-console.log('currentRec: ', currentRecipe);
   updateUserIngredients(neededIngredients)
   .then(response => {
     user.addIngredientAmount(neededIngredients);
