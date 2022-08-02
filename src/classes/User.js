@@ -78,7 +78,7 @@ returnPantryIngredients() {
     ingredients.forEach(ingredient => {
       const match = this.pantry.find(pantryIngredient => pantryIngredient.ingredient === ingredient.id)
 
-      match.amount -= ingredient.amount;
+      match.amount -= ingredient.quantityAmount;
       !match.amount && this.removeIngredient(match);
     })
   }
@@ -89,7 +89,7 @@ returnPantryIngredients() {
   }
 
   addIngredientToPantry(ingredient) {
-     this.pantry.push({ingredient: ingredient.id, amount: ingredient.amount});
+     this.pantry.push({ingredient: ingredient.id, amount: ingredient.quantityAmount});
    }
 
    returnNeededIngredients(recipe) {
@@ -110,7 +110,7 @@ returnPantryIngredients() {
 
    const needByAmount = result.have.filter(resultIngredient => {
      let foundMatches = this.pantry.find(ingredient => ingredient.ingredient === resultIngredient.id)
-     return foundMatches.amount < resultIngredient.amount
+     return foundMatches.amount < resultIngredient.quantityAmount
 
    }).map(recipeIngredient => {
      const foundMatches = this.pantry.find(pantryIngredient => pantryIngredient.ingredient === recipeIngredient.id)
@@ -118,7 +118,7 @@ returnPantryIngredients() {
      return {
        id: recipeIngredient.id,
        name: recipeIngredient.name,
-       amount: recipeIngredient.amount - foundMatches.amount
+       amount: recipeIngredient.quantityAmount - foundMatches.amount
      }
    })
 

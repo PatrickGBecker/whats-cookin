@@ -45,7 +45,7 @@ const singleRecipeContent = document.querySelector('.single-recipe-content');
 const appetizerRecipesContent = document.querySelector('.appetizers-recipes-content');
 const mainCourseRecipesContent = document.querySelector('.main-course-recipes-content');
 const sideDishRecipesContent = document.querySelector('.side-dishes-recipes-content');
-const pantryIngredientsContent = document.querySelectorAll('pantryIngredientItem'); 
+const pantryIngredientsContent = document.getElementById('pantryIngredients');
 const ingredientsNeededContent = document.getElementById('ingredientNeeded');
 const recipeName = document.getElementById('recipeName');
 const recipeIngredients = document.getElementById('recipeIngredientsItem');
@@ -70,7 +70,6 @@ Promise.all([
   getData(`http://localhost:3001/api/v1/recipes`),
 ])
   .then(data => {
-    console.log(data)
     userData = data[0];
     ingredientsData = data[1];
     recipeData = data[2];
@@ -93,8 +92,11 @@ function modifyIngredient(userId, ingredientsId, ingredientsModification) {
     }
   })
     .then(response => response.json())
-    .then(data => console.log('POST data: ', data))
-    .catch(error => console.log('POST error: ', `Looks like there was a problem!`, error))
+    .then(data => data)
+    .then( () => fetch(`http://localhost:3001/api/v1/users`))
+    .then(response => response.json())
+    .then(data => data)
+    .catch(error => console.log(`${response.statusText}: Looks like there was a problem!`, error))
 }
 
 
@@ -412,7 +414,9 @@ function createNeededIngredients(neededIngredients) {
 function updateUserIngredients(ingredients) {
   return Promise.all(
     ingredients.map((ingredient) => {
-      modifyIngredient(user.id, ingredient.id, ingredient.amount);
+      console.log('ingAmount: ', ingredient.quantityAmount)
+      modifyIngredient(user.id, ingredient.id, ingredient.quantityAmount);
+
     })
   )
 };
