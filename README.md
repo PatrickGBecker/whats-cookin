@@ -36,10 +36,11 @@ What's Cookin' is a virtual recipe database, where users can browse and save rec
 
 
 Technologies Used
+- Github Project Board Project Management
+- JavaScript
 - Mocha
 - Chai
-- JavaScript
 - Fetch API
-- Github Project Board Project Management
+- Micromodal
 
 
