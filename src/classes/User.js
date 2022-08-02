@@ -39,7 +39,6 @@ class User {
   checkPantry(recipe) {
     let match = 0;
     recipe.ingredients.forEach(recipeIngredient => {
-      console.log('recIng: ', recipeIngredient.quantityAmount);
       this.pantry.forEach(pantryIngredient => {
         if (recipeIngredient.id === pantryIngredient.ingredient && pantryIngredient.amount >= recipeIngredient.quantityAmount) {
           match += 1;

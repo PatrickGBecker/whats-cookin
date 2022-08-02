@@ -21,26 +21,3 @@ class Ingredient {
 
 
 export default Ingredient;
-
-
-
-
-
-
-
-
-
-
-// updateProperties(recipeData) {
-//     let allIngredients = [];
-//     recipeData.forEach((recipe) => {
-//       recipe.ingredients.forEach((ingredient) => {
-//         allIngredients.push(ingredient);
-//       })
-//     })
-//     let ingredientObj = allIngredients.find((ingredient) => ingredient.id === this.id)
-//     this.quantityAmount = ingredientObj.quantity.amount;
-//     this.quantityUnit = ingredientObj.quantity.unit;
-// }
-
-

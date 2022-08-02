@@ -95,7 +95,7 @@ function modifyIngredient(userId, ingredientsId, ingredientsModification) {
     .then( () => fetch(`http://localhost:3001/api/v1/users`))
       .then(response => response.json())
       .then(data => data)
-    .catch(error => console.log(generateErrorMessage(error)))
+    .catch(error => generateErrorMessage(error))
 }
 
 function checkStatus(response) {
@@ -374,22 +374,18 @@ function searchDeclaration(searchInput) {
 function searchInvocation(searchInput) {
   filteredRecipes = recipeRepository.filterByRecipeName(searchInput);
   let findRecipesByIngredient = recipeRepository.getRecipeIngredientsData(searchInput, searchInput);
-  console.log('recipes by ingredient', findRecipesByIngredient)
 
   findRecipesByIngredient.forEach(recipe => {
     if (!filteredRecipes.includes(recipe)) {
       filteredRecipes.push(recipe);
     }
   });
-
-  console.log('filtered recipes', filteredRecipes)
 };
 
 function getTag(event) {
   const tagClicked = event.target.closest('button');
   tag = tagClicked.value;
   taggedRecipes = recipeRepository.filterByTag(tag);
-  console.log(tag)
 
   if (tag === "appetizer") {
     displayAppetizerRecipes();
@@ -420,7 +416,6 @@ function updateUserIngredients(ingredients) {
     ingredients.map((ingredient) => {
       const quantity = ingredient.quantityAmount || ingredient.amount;
       modifyIngredient(user.id, ingredient.id, quantity);
-      console.log('after modifyIngredient', ingredient.quantityAmount)
     })
   )
 };
@@ -433,7 +428,6 @@ function addIngredients() {
     user.addIngredientAmount(neededIngredients);
     const pantryIngredients = user.returnPantryIngredients();
     createPantryIngredients(pantryIngredients);
-    console.log('pantryINg: ', pantryIngredients);
     MicroModal.close("modal-1");
     MicroModal.show("modal-2");
   })

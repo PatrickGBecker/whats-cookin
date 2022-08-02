@@ -54,36 +54,8 @@ class RecipeRepository {
           }
             return searchedRecipes
           }, []);
-          // console.log('filteredRecipes', filteredRecipes);
         return filteredRecipes;
       }
-  // getRecipeIngredientsData(ingredientName, recipesToSearch) {
-  //   const recipes = recipesToSearch || this.recipes;
-  //   const filteredRecipe = recipes.filter((recipe) => {
-  //     const hasMatchingIngredient = recipe.ingredients.find((ingredient) => {
-  //       return ingredient.name.includes(ingredientName);
-  //     })
-  //     if (hasMatchingIngredient) {
-  //       return true;
-  //     }
-  //     return false;
-  //   })
-  //   return filteredRecipe;
-  // }
-  // getRecipeIngredientsData(searchInput) {
-  //   const recipes = this.recipes || searchInput ;
-  //   const filteredRecipe = recipes.filter((recipe) => {
-  //     const hasMatchingIngredient = recipe.ingredients.find((ingredient) => {
-  //       return ingredient.name.includes(searchInput);
-  //     })
-  //     if (hasMatchingIngredient) {
-  //       return true;
-  //     }
-  //     return false;
-  //   })
-  //   return filteredRecipe;
-  // }
-
 };
 
 export default RecipeRepository;
