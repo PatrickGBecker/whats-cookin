@@ -1,16 +1,12 @@
 import '../dist/bundle.js';
 import './styles.css';
 import getData from './apiCalls';
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
 import Ingredient from './classes/Ingredient'
 import RecipeRepository from './classes/RecipeRepository'
 import Recipe from './classes/Recipe'
 import User from './classes/User';
 import MicroModal from 'micromodal';
 
-
-// Query Selectors for buttons:
 const viewHomeButton = document.querySelector('.view-home-button');
 const viewAllRecipesButton = document.querySelector('.view-all-recipes');
 const viewFavoritesButton = document.querySelector('.view-favorites');
@@ -23,8 +19,8 @@ const sideDishesButton = document.querySelector('.side-dishes-button');
 const cookRecipeButton = document.getElementById('cookRecipeButton')
 const addIngredientsButton = document.getElementById('addIngredientsButton')
 const confirmCookingButton = document.getElementById('confirmCookingButton')
+const confirmErrorReadButton = document.getElementById('confirmErrorReadButton')
 
-// Query Selectors for views:
 const homeView = document.querySelector('.home-view-section');
 const allRecipesView = document.querySelector('.all-recipes-view-section');
 const favoritesView = document.querySelector('.favorites-view-section');
@@ -35,7 +31,7 @@ const appetizerRecipesView = document.querySelector('.appetizers-recipes-view-se
 const mainCourseRecipesView = document.querySelector('.main-course-recipes-view-section');
 const sideDishRecipesView = document.querySelector('.side-dishes-recipes-view-section');
 const allSections = document.querySelectorAll('section > section');
-// Query Selector for updating page content
+
 const allRecipesContent = document.querySelector('.all-recipes-view-content');
 const favoritesContent = document.querySelector('.favorites-view-content');
 const noFavoritesAdded = document.getElementById('noFavoritesAdded')
@@ -47,12 +43,14 @@ const mainCourseRecipesContent = document.querySelector('.main-course-recipes-co
 const sideDishRecipesContent = document.querySelector('.side-dishes-recipes-content');
 const pantryIngredientsContent = document.getElementById('pantryIngredients');
 const ingredientsNeededContent = document.getElementById('ingredientNeeded');
+const errorMessageContent = document.getElementById('error-message-modal')
 const recipeName = document.getElementById('recipeName');
 const recipeIngredients = document.getElementById('recipeIngredientsItem');
 const recipeInstructions = document.getElementById('recipeInstructionsItem');
 const recipeImage = document.getElementById('recipeImage');
 const recipeCost = document.getElementById('recipeCost');
-// Global Variables:
+const modal = document.querySelector('.modal')
+
 let ingredients;
 let ingredientsData;
 let filteredRecipes = [];
@@ -91,18 +89,37 @@ function modifyIngredient(userId, ingredientsId, ingredientsModification) {
       'Content-Type': 'application/json'
     }
   })
+    .then(checkStatus)
     .then(response => response.json())
     .then(data => data)
     .then( () => fetch(`http://localhost:3001/api/v1/users`))
-    .then(response => response.json())
-    .then(data => data)
-    .catch(error => console.log(`${response.statusText}: Looks like there was a problem!`, error))
+      .then(response => response.json())
+      .then(data => data)
+    .catch(error => console.log(generateErrorMessage(error)))
 }
 
+function checkStatus(response) {
+  if (response.ok) {
+    return Promise.resolve(response);
+  } else {
+    return Promise.reject(new Error(generateErrorMessage(response)));
+  }
+}
 
-// Event Listeners:
-// singleRecipeContent.addEventListener('click', () => {
-  // displayRecipe(event) });
+function generateErrorMessage(response) {
+  errorMessageContent.innerHTML = '';
+  
+  errorMessageContent.innerHTML +=
+  `<h2 class="modal-title" id="error-message-modal">${response.statusText}: Oops! Looks like there was an error!</h2>`;
+  MicroModal.show("modal-3")
+}
+
+function closeError() {
+  MicroModal.close("modal-3");
+  MicroModal.close("modal-2");
+  displayHomeView();
+}
+
 viewHomeButton.addEventListener('click', displayHomeView);
 viewAllRecipesButton.addEventListener('click', displayAllRecipesView);
 viewFavoritesButton.addEventListener('click', displayFavoritesView);
@@ -114,8 +131,8 @@ sideDishesButton.addEventListener('click', getTag);
 cookRecipeButton.addEventListener('click', displayModal);
 addIngredientsButton.addEventListener('click', addIngredients);
 confirmCookingButton.addEventListener('click', useIngredients);
+confirmErrorReadButton.addEventListener('click', closeError)
 searchInput.addEventListener('keyup', (event) => {
-  console.log(event.target.value)
   searchInitialization(event)
   });
 allSections.forEach(section => section.addEventListener('click', displayRecipe));
@@ -127,7 +144,6 @@ allSections.forEach(section => {
   });
 });
 
-// Helper Functions:
 function hideElements(elements) {
   elements.forEach(element => element.classList.add('hidden'));
 };
@@ -136,17 +152,8 @@ function showElements(elements) {
   elements.forEach(element => element.classList.remove('hidden'));
 };
 
-// function addStyling(elements, className) {
-//   elements.classList.add(className)
-// };
-
-// function removeStyling(elements, className) {
-//   elements.classList.remove(className)
-// };
-
-// DOM Display
 function displayHomeView() {
-  hideElements([viewHomeButton, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView]);
+  hideElements([viewHomeButton, allRecipesView, favoritesView, searchResultsView, singleRecipeView, appetizerRecipesView, mainCourseRecipesView, sideDishRecipesView, modal]);
   showElements([homeView, viewAllRecipesButton, viewFavoritesButton]);
 };
 
@@ -194,7 +201,6 @@ function displaySideDishRecipes() {
   createRecipeCard(sideDishRecipesContent, taggedRecipes);
 };
 
-// DOM Functionality
 function getUser(usersData) {
   const randomIndex = getRandomIndex(usersData);
   const randomUserData = usersData[randomIndex];
@@ -343,10 +349,7 @@ function searchInitialization(event) {
     displayHomeView();
     return false;
   }
-  if (key === 'enter') {
-    event.preventDefault();
-    return;
-  }
+
   searchDeclaration(searchInput);
 };
 
@@ -406,7 +409,8 @@ function createPantryIngredients(pantryIngredients) {
 
 function createNeededIngredients(neededIngredients) {
   ingredientsNeededContent.innerHTML = neededIngredients.reduce((neededObj, neededIngredient) => {
-    neededObj += `<li class="ingredient-needed" id="ingredientNeeded">${neededIngredient.quantityAmount} ${neededIngredient.name}</li>`;
+    const quantity = neededIngredient.quantityAmount || neededIngredient.amount;
+    neededObj += `<li class="ingredient-needed" id="ingredientNeeded">${quantity} ${neededIngredient.name}</li>`;
     return neededObj;
   }, '');
 }
@@ -414,9 +418,9 @@ function createNeededIngredients(neededIngredients) {
 function updateUserIngredients(ingredients) {
   return Promise.all(
     ingredients.map((ingredient) => {
-      console.log('ingAmount: ', ingredient.quantityAmount)
-      modifyIngredient(user.id, ingredient.id, ingredient.quantityAmount);
-
+      const quantity = ingredient.quantityAmount || ingredient.amount;
+      modifyIngredient(user.id, ingredient.id, quantity);
+      console.log('after modifyIngredient', ingredient.quantityAmount)
     })
   )
 };
@@ -424,8 +428,6 @@ function updateUserIngredients(ingredients) {
 function addIngredients() {
   const currentRecipe = findRecipeName();
   const neededIngredients = user.returnNeededIngredients(currentRecipe);
-console.log('needeIng: ', neededIngredients);
-console.log('currentRec: ', currentRecipe);
   updateUserIngredients(neededIngredients)
   .then(response => {
     user.addIngredientAmount(neededIngredients);
