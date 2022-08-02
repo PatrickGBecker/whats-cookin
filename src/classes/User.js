@@ -39,6 +39,7 @@ class User {
   checkPantry(recipe) {
     let match = 0;
     recipe.ingredients.forEach(recipeIngredient => {
+      console.log('recIng: ', recipeIngredient.quantityAmount);
       this.pantry.forEach(pantryIngredient => {
         if (recipeIngredient.id === pantryIngredient.ingredient && pantryIngredient.amount >= recipeIngredient.quantityAmount) {
           match += 1;
@@ -67,7 +68,7 @@ returnPantryIngredients() {
     ingredients.forEach(ingredient => {
       const match = this.pantry.find(pantryIngredient => pantryIngredient.ingredient === ingredient.id)
         if (match) {
-          match.amount += ingredient.amount;
+          match.amount += ingredient.quantityAmount;
         } else {
             this.addIngredientToPantry(ingredient);
         }
@@ -114,7 +115,6 @@ returnPantryIngredients() {
 
    }).map(recipeIngredient => {
      const foundMatches = this.pantry.find(pantryIngredient => pantryIngredient.ingredient === recipeIngredient.id)
-
      return {
        id: recipeIngredient.id,
        name: recipeIngredient.name,
