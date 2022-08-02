@@ -17,7 +17,7 @@
         <div class="nav-bar-search">
           <form role="search" class="search-bar">
             <label for="searchBarInput" class="search-bar-label">Search</label>
-            <input type="search" class="search-input" name="searchInput" value="" id="searchBarInput">
+            <input type="search" class="search-input" onkeypress="return event.keyCode != 13" name="searchInput" value="" id="searchBarInput">
           </form>
         </div>
       </nav>
@@ -72,14 +72,14 @@
           </div>
           <div class="content single-recipe-content" id="singleRecipeContent">
             <section class="recipe-ingredients" id="recipeIngredients">
+              <aside>
+                <h2>Your Pantry</h2>
+                  <ul id="pantryIngredients" class="pantry-ingredients">
+                    <li class="pantry-ingredient-item" id="pantryIngredientItem"></li>
+                  </ul>
+                <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
+              </aside>
               <div class="ingredient-container">
-                <aside>
-                  <h2>Your Pantry</h2>
-                    <ul id="pantryIngredients" class="pantry-ingredients">
-                      <li class="pantry-ingredient-item" id="pantryIngredientItem"></li>
-                    </ul>
-                  <button type="button" class="cook-recipe-button" id="cookRecipeButton">Let's Get Cooking!</button>
-                </aside>
                 <ul class="ingredient-list">
                   <h2>Ingredients</h2>
                   <li class="ingredient-item" id="recipeIngredientsItem"></li>
@@ -95,8 +95,8 @@
               <li class="instruction-item" id="recipeInstructionsItem"></li>
             </ol>
           </div>
-          <button type="button" class="add-to-favorites-button" id="addToFavoritesButton">Add To Favorites</button>
-          <button type="button" class="remove-from-favorites-button hidden" id="removeFromFavoritesButton">Remove From Favorites</button>
+          <button type="button" class="favorite add-to-favorites-button" id="addToFavoritesButton">Add To Favorites</button>
+          <button type="button" class="favorite remove-from-favorites-button hidden" id="removeFromFavoritesButton">Remove From Favorites</button>
         </section>
       </section>
       <section class="appetizers-recipes-view-section" id="appetizersRecipesViewSection">
@@ -144,7 +144,7 @@
         </section>
       </section>
     </main>
-    <div class="modal" id="modal-1" aria-hidden="true">
+    <section class="modal" id="modal-1" aria-hidden="true">
       <div class="modal-overlay" tabindex="-1" data-micromodal-close>
         <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="add-ingredients-to-pantry" >
           <section class="modal-content" id="modal-1-content">
@@ -164,25 +164,42 @@
           </footer>
         </div>
       </div>
-    </div>
-    <div class="modal" id="modal-2" aria-hidden="true">
+    </section>
+    <section class="modal" id="modal-2" aria-hidden="true">
       <div class="modal-overlay" tabindex="-1" data-micromodal-close >
         <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="cook-confirmation-modal" >
-          <header class="modal-header">
-            <h2 class="modal-title" id="cook-confirmation-modal">Cook this recipe</h2>
-            <button class="modal-close" aria-label="Close modal" data-micromodal-close></button>
-          </header>
           <section class="modal-content" id="modal-1-content">
+            <header class="modal-header">
+              <h2 class="modal-title" id="cook-confirmation-modal">Cook this recipe</h2>
+              <button class="modal-close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
             <p>You have enough ingredients to cook this recipe!</p>
             <p>Click YES, to confirm and update your pantry.</p>
           </section>
           <footer class="modal-footer">
-           <button class="modal-button" id="confirmCookingButton" aria-label="Cook current recipe and remove ingredients used from pantry">YES</button>
-           <button class="modal-button" data-micromodal-close aria-label="Close this dialog window">CANCEL</button>
-         </footer>
-       </div>
-     </div>
-   </div>
+            <button class="modal-button" id="confirmCookingButton" aria-label="Cook current recipe and remove ingredients used from pantry">YES</button>
+            <button class="modal-button" data-micromodal-close aria-label="Close this dialog window">CANCEL</button>
+          </footer>
+        </div>
+      </div>
+    </section>
+    <section class="modal" id="modal-3" aria-hidden="true">
+      <div class="modal-overlay" tabindex="3" data-micromodal-close>
+        <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="error-message-modal">
+          <header class="modal-header">
+            <h2 class="modal-title" id="error-message-modal">Oops! Looks like there was an error!</h2>
+            <button class="modal-close" aria-label="Close modal" data-micromodal-close></button>
+          </header>
+          <section class="modal-content" id="modal-3-content">
+            <p>You will now be redirected to the homepage.</p>
+          </section>
+          <footer class="modal-footer">
+            <button class="modal-button" id="confirmErrorReadButton"
+              aria-label="Return to the homepage to view more recipes">Ok</button>
+          </footer>
+        </div>
+      </div>
+    </section>
   </body>
   <script src="bundle.js"></script>
 </html>
